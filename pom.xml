@@ -22,9 +22,7 @@
   <url>http://DavidWhitlock.github.io/PortlandStateJavaWinter2020</url>
 
   <modules>
-    <module>student</module>
     <module>airline</module>
-    <module>koans</module>
   </modules>
 
   <inceptionYear>2020</inceptionYear>
