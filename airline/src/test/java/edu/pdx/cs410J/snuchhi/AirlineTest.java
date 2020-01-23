@@ -2,8 +2,6 @@ package edu.pdx.cs410J.snuchhi;
 
 import org.junit.Test;
 import edu.pdx.cs410J.AbstractFlight;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
 import java.util.ArrayList;
 
 /**
@@ -13,7 +11,7 @@ import java.util.ArrayList;
 public class AirlineTest{
 
         private Airline createAirlineFlightList(ArrayList<AbstractFlight> flightArray){
-                return new Airline("Test", flightArray);
+                return new Airline("Test");
         }
 
         @Test

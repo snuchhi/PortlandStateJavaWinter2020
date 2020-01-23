@@ -70,27 +70,27 @@ public class FlightTest {
   private Flight createFlightForDestValidation(String dst){
     return new Flight(42, "tst", "00/00/0000 00:00", dst, "00/00/0000 00:00");
   }
-
+ // the test is to validate that the destination string is correctly input
   @Test
   public void correctDestValidation(){
     String dst = "lax";
     createFlightForDestValidation(dst);
   }
-
+  // the test is to validate for the destination not having 3 letters
   @Test(expected = IllegalArgumentException.class)
   public void DestIsLessThanThreeLetters()
   {
     String dst = "la";
     createFlightForSrcValidation(dst);
   }
-
+  // test is to validate destination having more than 3 letters
   @Test(expected = IllegalArgumentException.class)
   public void destIsMoreThanThreeLetters()
   {
     String dst = "laxp";
     createFlightForDestValidation(dst);
   }
-
+  // test is to validate for non characters in destination
   @Test(expected = IllegalArgumentException.class)
   public void DestDoesNotHaveOnlyLetters()
   {

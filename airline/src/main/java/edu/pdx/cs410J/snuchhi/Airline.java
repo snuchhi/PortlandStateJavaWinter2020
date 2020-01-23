@@ -6,23 +6,28 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 //the Airline classes is derived from AbstractAirline class that has a airline and list of flights for that airline.
-public class Airline extends AbstractAirline {
+public class Airline<T extends AbstractFlight> extends AbstractAirline<T> {
     /**
      * @params
      * airlineName : is a string that represents name of an airline
      * flightArrayList : is an array that holds the list of arrays for a given airline
      */
     private String airlineName;
-    private ArrayList<AbstractFlight> flightArrayList;
+    private ArrayList<AbstractFlight>  flightArrayList = new ArrayList<>();
 
     /**this is an airline class constructor that initializes the params
      *
      * @param airlineName : initialize airlineName
-     * @param flightArrayList : initialize flightArrayList
      */
-    public Airline(String airlineName, ArrayList<AbstractFlight> flightArrayList){
-        this.airlineName = airlineName;
-        this.flightArrayList = new ArrayList<AbstractFlight>();
+    public Airline(String airlineName){
+        if(airlineName.length()!=0)
+        {
+            this.airlineName = airlineName;
+        }
+        else
+            {
+            throw new IllegalArgumentException("Airline name is not set");
+        }
     }
 
     /**
@@ -41,7 +46,7 @@ public class Airline extends AbstractAirline {
     @Override
     public void addFlight(AbstractFlight abstractFlight) {
 
-        this.flightArrayList.add(abstractFlight);
+        flightArrayList.add(abstractFlight);
     }
 
     /**
@@ -50,7 +55,7 @@ public class Airline extends AbstractAirline {
      */
     @Override
     public Collection getFlights() {
-        return null;
+        return flightArrayList;
     }
 }
 

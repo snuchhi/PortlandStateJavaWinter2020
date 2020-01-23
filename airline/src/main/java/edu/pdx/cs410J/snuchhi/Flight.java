@@ -20,7 +20,7 @@ public class Flight extends AbstractFlight {
   private String arrive;
 
   /**
-   *
+   * Constructor
    * @param flightNum - flightNumber
    * @param src - source
    * @param depart - departure date and time
@@ -42,7 +42,7 @@ public class Flight extends AbstractFlight {
     if (Pattern.compile("[^a-zA-Z]").matcher(src).find()) {
       throw new IllegalArgumentException("src contains invalid character, should have only letters");
     }
-    //initialize the source argument
+    //set the source argument
     this.src = src;
 
     //destination string validation(less than 3)
@@ -57,7 +57,7 @@ public class Flight extends AbstractFlight {
     if (Pattern.compile("[^a-zA-Z]").matcher(dest).find()) {
       throw new IllegalArgumentException("destination contains invalid character, should have only letters");
     }
-    //initialize the dest argument
+    //set the dest argument
     this.dest = dest;
 
     //departure date & time validation
@@ -72,7 +72,7 @@ public class Flight extends AbstractFlight {
       // if departure has letters
       throw new IllegalArgumentException("the date contains letters,please enter correct format mm/dd/yyyy 00:00");
     }
-    //initialize the departure time
+    //set the departure time
     this.depart = depart;
 
     //departure date & time validation
