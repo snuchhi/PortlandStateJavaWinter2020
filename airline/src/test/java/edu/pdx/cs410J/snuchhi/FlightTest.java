@@ -2,7 +2,6 @@ package edu.pdx.cs410J.snuchhi;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import edu.pdx.cs410J.AbstractFlight;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import java.util.ArrayList;
@@ -13,25 +12,32 @@ public class FlightTest {
   @Ignore
   @Test(expected = UnsupportedOperationException.class)
   public void getArrivalStringNeedsToBeImplemented() {
-    Flight flight = new Flight(00, "src",  "00/00/000000:00","dst", "00/00/000000:00");
-    assertThat(flight.getArrivalString(), equalTo(flight));
+    Flight flight = new Flight(00, "src",  "00/00/0000 00:00","dst", "00/00/0000 00:00");
+    assertThat(flight.getArrivalString(), equalTo("Flight 0 departs src at 00/00/0000 00:00 arrives dst at 00/00/0000 00:00"));
   }
 
   @Test
   public void initiallyAllFlightsHaveTheSameNumber() {
-    Flight flight = new Flight(42, "tst", "00/00/000000:00", "tst", "00/00/000000:00");
+    Flight flight = new Flight(42, "tst", "00/00/0000 00:00", "tst", "00/00/0000 00:00");
     assertThat(flight.getNumber(), equalTo(42));
   }
 
+  private Flight createFlightForFullCommandLineValidation(String src, String dept, String dest, String arrive){
+    return new Flight(00, src, dept, dest, arrive);
+  }
+
   @Test
-  public void forProject1ItIsOkayIfGetDepartureTimeReturnsNull() {
-    Flight flight = new Flight(42, "tst","00/00/000000:00", "tst", "00/00/000000:00");
-    assertThat(flight.getDeparture(), is(nullValue()));
+  public void checkForAllCorrectValues(){
+    String src = "lax";
+    String depart = "01/22/2020 15:15";
+    String dest = "pdx";
+    String arrive = "01/22/2020 17:00";
+    createFlightForFullCommandLineValidation(src,depart, dest, arrive);
   }
 
   //This is a test for source validation
   private Flight createFlightForSrcValidation(String src){
-    return new Flight(42, src, "00/00/000000:00", "dst", "00/00/000000:00");
+    return new Flight(42, src, "00/00/0000 00:00", "dst", "00/00/0000 00:00");
   }
 
   @Test
@@ -62,7 +68,7 @@ public class FlightTest {
   }
   //This is a test for destination validation
   private Flight createFlightForDestValidation(String dst){
-    return new Flight(42, "tst", "00/00/000000:00", dst, "00/00/000000:00");
+    return new Flight(42, "tst", "00/00/0000 00:00", dst, "00/00/0000 00:00");
   }
 
   @Test
@@ -74,38 +80,38 @@ public class FlightTest {
   @Test(expected = IllegalArgumentException.class)
   public void DestIsLessThanThreeLetters()
   {
-    String src = "la";
-    createFlightForSrcValidation(src);
+    String dst = "la";
+    createFlightForSrcValidation(dst);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void destIsMoreThanThreeLetters()
   {
-    String src = "laxp";
-    createFlightForDestValidation(src);
+    String dst = "laxp";
+    createFlightForDestValidation(dst);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void DestDoesNotHaveOnlyLetters()
   {
-    String src = "l2x";
-    createFlightForDestValidation(src);
+    String dst = "l2x";
+    createFlightForDestValidation(dst);
   }
 
   //Validation for departure(date and time format)
   private Flight createFlightForDepartValidation(String depart) {
-    return new Flight(00, "tst", depart, "tst", "00/00/000000:00");
+    return new Flight(00, "tst", depart, "tst", "00/00/0000 00:00");
   }
 
   @Test
   public void whenDepartIsValid(){
-    String depart = "00/00/000000:00";
+    String depart = "00/00/0000 00:00";
     createFlightForDepartValidation(depart);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void whenDepartIsNotInDateFormat(){
-    String invalidDepart = "xx/xx/xxxx xx:xx";
+    String invalidDepart = "xx xx:xx";
     createFlightForDepartValidation(invalidDepart);
   }
 
@@ -131,20 +137,20 @@ public class FlightTest {
     createFlightForDepartValidation(invalidDepart);
   }
 
-  //Validation for departure(date and time format)
+  //Validation for arrival(date and time format)
   private Flight createFlightForArrivalValidation(String arrive) {
     return new Flight(00, "tst","00/00/0000 00:00" , "tst",arrive );
   }
 
   @Test
   public void whenArrivalIsValid(){
-    String arrive = "00/00/000000:00";
+    String arrive = "00/00/0000 00:00";
     createFlightForDepartValidation(arrive);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void whenArrivalIsNotInDateFormat(){
-    String arrive = "xx/xx/xxxx xx:xx";
+    String arrive = "xx xx:xx";
     createFlightForDepartValidation(arrive);
   }
 
@@ -169,17 +175,6 @@ public class FlightTest {
     String arrive = "00/00/0000 000:00";
     createFlightForDepartValidation(arrive);
   }
-  private Flight createFlightForFullCommandLineValidation(String src, String dept, String dest, String arrive){
-    return new Flight(00, src, dept, dest, arrive);
-  }
 
-  @Test
-  public void properFinalTest(){
-    String src = "lax";
-    String depart = "01/22/202015:15";
-    String dest = "pdx";
-    String arrive = "01/22/202017:00";
-    createFlightForFullCommandLineValidation(src,depart, dest, arrive);
-  }
 
 }

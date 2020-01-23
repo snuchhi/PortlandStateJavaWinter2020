@@ -18,7 +18,7 @@ public class AirlineTest{
 
         @Test
         public void addNewFlight(){
-                Flight flight = new Flight(00, "tst", "00/00/000000:00", "tst", "00/00/000000:00");
+                Flight flight = new Flight(00, "tst", "00/00/0000 00:00", "tst", "00/00/0000 00:00");
                 ArrayList<AbstractFlight> flightArray = new ArrayList<AbstractFlight>();
                 Airline airline = createAirlineFlightList(flightArray);
                 airline.addFlight(flight);
@@ -26,7 +26,7 @@ public class AirlineTest{
 
         @Test
         public void getCorrectFlight(){
-                Flight flight = new Flight(00, "tst", "00/00/000000:00", "tst", "00/00/000000:00");
+                Flight flight = new Flight(00, "tst", "00/00/0000 00:00", "tst", "00/00/0000 00:00");
                 ArrayList<AbstractFlight> flightArray = new ArrayList<AbstractFlight>();
                 Airline airline = createAirlineFlightList(flightArray);
                 airline.getFlights();
@@ -34,14 +34,14 @@ public class AirlineTest{
 
         @Test(expected = IllegalArgumentException.class)
         public void addInvalidSrcInFlight(){
-                Flight flight = new Flight(00, "no", "00/00/000000:00", "tst", "00/00/000000:00");
+                Flight flight = new Flight(00, "no", "00/00/0000 00:00", "tst", "00/00/0000 00:00");
                 ArrayList<AbstractFlight> flightArray = new ArrayList<AbstractFlight>();
                 Airline airline = createAirlineFlightList(flightArray);
                 airline.addFlight(flight);
         }
         @Test(expected = IllegalArgumentException.class)
         public void addInvalidDestInFlight(){
-                Flight flight = new Flight(00, "pdx", "11/11/111111:11", "wrong", "22/22/222222:22");
+                Flight flight = new Flight(00, "pdx", "00/00/0000 00:00", "wrong", "00/00/0000 00:00");
                 ArrayList<AbstractFlight> flightArray = new ArrayList<AbstractFlight>();
                 Airline airline = createAirlineFlightList(flightArray);
                 airline.addFlight(flight);
@@ -49,7 +49,7 @@ public class AirlineTest{
 
         @Test(expected = IllegalArgumentException.class)
         public void addInvalidDepartInFlight(){
-                Flight flight = new Flight(00, "pdx", "000/000/00000000:000", "tst", "00/00/000000:00");
+                Flight flight = new Flight(00, "pdx", "000/000/000000 00:000", "tst", "00/00/0000 00:00");
                 ArrayList<AbstractFlight> flightArray = new ArrayList<AbstractFlight>();
                 Airline airline = createAirlineFlightList(flightArray);
                 airline.addFlight(flight);

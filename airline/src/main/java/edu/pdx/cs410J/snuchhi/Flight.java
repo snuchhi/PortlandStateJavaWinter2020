@@ -1,18 +1,32 @@
 package edu.pdx.cs410J.snuchhi;
 
 import edu.pdx.cs410J.AbstractFlight;
-import edu.pdx.cs410J.AbstractAirline;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+//The flight class is derived from AbstractFlight
 public class Flight extends AbstractFlight {
-
+  /**
+   * flightNum : the flightNumber
+   * src : 3 letter source code
+   * depart : the departure date and time
+   * dest : 3 letter destination code
+   * arrive : the arrival date and time
+   */
   private int flightNum ;
   private String src;
   private String depart;
   private String dest;
   private String arrive;
 
+  /**
+   *
+   * @param flightNum - flightNumber
+   * @param src - source
+   * @param depart - departure date and time
+   * @param dest - destination
+   * @param arrive - arrival date and time
+   */
   public Flight(int flightNum, String src, String depart, String dest,  String arrive) {
     this.flightNum = flightNum;
 
@@ -26,7 +40,7 @@ public class Flight extends AbstractFlight {
     }
     //source string validation(if source contains anything apart from letters
     if (Pattern.compile("[^a-zA-Z]").matcher(src).find()) {
-      throw new IllegalArgumentException("src contains invalid character, should have only 3 letters");
+      throw new IllegalArgumentException("src contains invalid character, should have only letters");
     }
     //initialize the source argument
     this.src = src;
@@ -41,16 +55,16 @@ public class Flight extends AbstractFlight {
     }
     //destination string validation(if source contains anything apart from letters
     if (Pattern.compile("[^a-zA-Z]").matcher(dest).find()) {
-      throw new IllegalArgumentException("destination contains invalid character, should have only 3 letters");
+      throw new IllegalArgumentException("destination contains invalid character, should have only letters");
     }
     //initialize the dest argument
     this.dest = dest;
 
     //departure date & time validation
-    if (depart.length() < 15) { // if the date and time string is smaller
+    if (depart.length() < 16) { // if the date and time string is smaller
       throw new IllegalArgumentException("please enter correct format mm/dd/yyyy 00:00");
     }
-    if (depart.length() > 15) {
+    if (depart.length() > 16) {
       // if the date and time string is bigger
       throw new IllegalArgumentException("please enter correct format mm/dd/yyyy 00:00");
     }
@@ -62,10 +76,10 @@ public class Flight extends AbstractFlight {
     this.depart = depart;
 
     //departure date & time validation
-    if (arrive.length() < 15) { // if the date and time string is smaller
+    if (arrive.length() < 16) { // if the date and time string is smaller
       throw new IllegalArgumentException("please enter correct format mm/dd/yyyy 00:00");
     }
-    if (arrive.length() > 15) {
+    if (arrive.length() > 16) {
       // if the date and time string is bigger
       throw new IllegalArgumentException("please enter correct format mm/dd/yyyy 00:00");
     }
@@ -76,11 +90,20 @@ public class Flight extends AbstractFlight {
     //initialize the arrival time
     this.arrive = arrive;
   }
+
+  /**
+   *
+   * @return return the flightNum
+   */
   @Override
   public int getNumber() {
     return this.flightNum;
   }
 
+  /**
+   *
+   * @return
+   */
   @Override
   public String getSource() {
 
@@ -88,6 +111,10 @@ public class Flight extends AbstractFlight {
     return this.src;
   }
 
+  /**
+   *
+   * @return
+   */
   @Override
   public String getDepartureString() {
 
@@ -95,6 +122,10 @@ public class Flight extends AbstractFlight {
     return this.depart;
   }
 
+  /**
+   *
+   * @return
+   */
   @Override
   public String getDestination() {
 
@@ -102,6 +133,10 @@ public class Flight extends AbstractFlight {
     return this.dest;
   }
 
+  /**
+   *
+   * @return
+   */
   @Override
   public String getArrivalString() {
 
