@@ -19,7 +19,8 @@ public class Project1 {
 
     int optionPrint = 0;
     int optionReadMe = 0;
-
+    String departDate = "";
+    String arrivalDate = "";
     //set optionPrint to 1 if -print specified
     if (args[0].equals("-print") || args[1].equals("-print")) {
       optionPrint = 1;
@@ -30,34 +31,35 @@ public class Project1 {
       optionReadMe = 1;
     }
     //if the number of arguments are less than 6 throw error
-    if (args.length < 6 && optionPrint == 0 && optionReadMe == 0) {
+    if (args.length < 8 && optionPrint == 0 && optionReadMe == 0) {
       System.err.println("Missing command line arguments please enter command line arguments");
       System.exit(1);
+
     }
     //if the number of arguments are greater than 6 and no option is specified throw an error
-    if (args.length > 6 && optionPrint == 0 && optionReadMe == 0) {
+    if (args.length > 8 && optionPrint == 0 && optionReadMe == 0) {
       System.out.println(args.length);
       System.err.println("Additional command line arguments present please reenter");
       System.exit(1);
     }
     //if the number of arguments are less than 7 and ReadMe or print specified throw error
-    if (args.length < 7 && optionPrint == 1 || args.length < 7 && optionReadMe == 1 ) {
+    if (args.length < 9 && optionPrint == 1 || args.length < 9 && optionReadMe == 1 ) {
       System.err.println("Missing command line arguments please enter command line arguments options entered");
       System.exit(1);
     }
     //if the number of arguments are greater than 7 and ReadMe or print specified throw error
-    if (args.length > 7 && optionReadMe == 0 || args.length > 7 && optionPrint == 0 ) {
+    if (args.length > 9 && optionReadMe == 0 || args.length > 9 && optionPrint == 0 ) {
       System.err.println("Additional command line arguments present please reenter option entered");
       System.exit(1);
     }
     //if the number of arguments are less than 8 and ReadMe and print specified throw error
-    if (args.length < 8 && optionPrint == 1 && optionReadMe == 1) {
+    if (args.length < 10 && optionPrint == 1 && optionReadMe == 1) {
       System.err.println("Missing command line arguments please enter command line arguments both options entered ");
       System.exit(1);
     }
 
     //if the number of arguments are greater than 8 and ReadMe and print specified throw error
-    if (args.length > 8) {
+    if (args.length > 10) {
       System.err.println("Additional command line arguments present please reenter options entered ");
       System.exit(1);
     }
@@ -65,7 +67,11 @@ public class Project1 {
     // if print and readme  is specified create a new flight class using the command line arguments and create an airline class
     // using the airline specified in command line and add the flight to airline flightArrayList
     if (optionPrint == 0 && optionReadMe == 0) {
-      Flight flight = new Flight(Integer.parseInt(args[1]), args[2], args[3], args[4], args[5]);
+      departDate = args[3] + " " + args[4];
+      arrivalDate = args[6] + " " + args[7];
+      System.out.println(departDate);
+
+      Flight flight = new Flight(Integer.parseInt(args[1]), args[2], departDate, args[5], arrivalDate);
       ArrayList<AbstractFlight> flightArrayList = new ArrayList<>();
       Airline<Flight> airline = new Airline<>(args[0]);
       airline.addFlight(flight);
@@ -79,7 +85,9 @@ public class Project1 {
     // using the airline specified in command line and add the flight to airline flightArrayList
     //print the details
     if (optionPrint == 1 && optionReadMe == 0) {
-      Flight flight = new Flight(Integer.parseInt(args[2]), args[3], args[4], args[5], args[6]);
+      departDate = args[4] + " " + args[5];
+      arrivalDate = args[7] +" " + args[8];
+      Flight flight = new Flight(Integer.parseInt(args[2]), args[3], departDate, args[6], arrivalDate);
       ArrayList<AbstractFlight> flightArrayList = new ArrayList<>();
       Airline<Flight> airline = new Airline<>(args[1]);
       airline.addFlight(flight);
@@ -90,7 +98,9 @@ public class Project1 {
     // using the airline specified in command line and add the flight to airline flightArrayList
     // print the details and print the ReadMe as well
     if (optionPrint == 1 && optionReadMe == 1) {
-      Flight flight = new Flight(Integer.parseInt(args[3]), args[4], args[5], args[6], args[7]);
+      departDate = args[5] + " " + args[6];
+      arrivalDate = args[8] + " " + args[9];
+      Flight flight = new Flight(Integer.parseInt(args[3]), args[4], departDate, args[7], arrivalDate);
       ArrayList<AbstractFlight> flightArrayList = new ArrayList<>();
       Airline<Flight> airline = new Airline<>(args[2]);
       airline.addFlight(flight);
@@ -101,14 +111,6 @@ public class Project1 {
     }
 
     System.exit(1);
-  }
-
-  /**
-   * show an message to enter correct command line arguments
-   */
-  public static void enterCommandLineArgsInOrder() {
-
-
   }
 
   /**
