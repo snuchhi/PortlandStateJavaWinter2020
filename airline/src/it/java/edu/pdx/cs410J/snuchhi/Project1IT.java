@@ -45,7 +45,7 @@ public class Project1IT extends InvokeMainTestCase {
     @Test
     public void testWithManyCommandLineArguments()
     {
-        MainMethodResult result = invokeMain("CS410J", "42", "lax", "01/22/2020 15:30", "pdx", "01/22/2020 17:30","mam");
+        MainMethodResult result = invokeMain("CS410J", "42", "lax", "01/22/2020" , "15:30 ", "pdx", "01/22/2020", "17:30","mam");
         assertThat(result.getExitCode(), equalTo(1));
         assertThat(result.getTextWrittenToStandardError(), containsString("Additional command line arguments present please reenter"));
     }
@@ -55,7 +55,7 @@ public class Project1IT extends InvokeMainTestCase {
      */
     @Test
     public void testWithCorrectCommandLineArgumentsAndPrintOption() {
-        MainMethodResult result = invokeMain("-print", "CS410J", "42", "lax", "01/22/2020 15:30", "pdx", "01/22/2020 17:30");
+        MainMethodResult result = invokeMain("-print", "CS410J", "42", "lax", "01/22/2020", "15:30", "pdx", "01/22/2020", "17:30");
         assertThat(result.getExitCode(), equalTo(1));
         assertThat(result.getTextWrittenToStandardOut(), containsString("Flight 42 departs lax at 01/22/2020 15:30 arrives pdx at 01/22/2020 17:30"));
     }
@@ -65,7 +65,7 @@ public class Project1IT extends InvokeMainTestCase {
      */
     @Test
     public void testWithCorrectCommandLineArgumentsAndReadMeOption() {
-        MainMethodResult result = invokeMain("-ReadMe", "CS410J", "42", "lax", "01/22/2020 15:30", "pdx", "01/22/2020 17:30");
+        MainMethodResult result = invokeMain("-ReadMe", "CS410J", "42", "lax", "01/22/2020", "15:30", "pdx", "01/22/2020", "17:30");
         assertThat(result.getExitCode(), equalTo(1));
         assertThat(result.getTextWrittenToStandardOut(), containsString("" +
                 "This is Project for CS510 Advanced Java Course which aims at designing an Airline Application\tCreated/Developed by: Shruti Nuchhi\n" +
@@ -98,7 +98,7 @@ public class Project1IT extends InvokeMainTestCase {
      */
     @Test
     public void testWithManyCommandLineArgumentsAndWithPrintOption() {
-        MainMethodResult result = invokeMain("-print", "CS410J", "42", "lax", "01/22/2020 15:30", "pdx", "01/22/2020 17:30", "xxxx");
+        MainMethodResult result = invokeMain("-print", "CS410J", "42", "lax", "01/22/2020", "15:30", "pdx", "01/22/2020", "17:30", "xxxx");
         assertThat(result.getExitCode(), equalTo(1));
         assertThat(result.getTextWrittenToStandardError(), containsString("Additional command line arguments present please reenter"));
     }
@@ -108,7 +108,7 @@ public class Project1IT extends InvokeMainTestCase {
      */
     @Test
     public void testWithCorrectCommandLineArgumentsAndWithPrintAndReadMeOption() {
-        MainMethodResult result = invokeMain("-print", "-ReadMe", "CS410J", "42", "lax", "01/22/2020 15:30", "pdx", "01/22/2020 17:30");
+        MainMethodResult result = invokeMain("-print", "-ReadMe", "CS410J", "42", "lax", "01/22/2020", "15:30", "pdx", "01/22/2020" , "17:30");
         assertThat(result.getExitCode(), equalTo(1));
     }
 
