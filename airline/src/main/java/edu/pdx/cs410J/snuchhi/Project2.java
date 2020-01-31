@@ -88,8 +88,8 @@ public class Project2 {
         if (optionTextFile == 1 && exists.isFile()) {
             departDate = flightCommandArgs.get(3) + " " +  flightCommandArgs.get(4);
             arrivalDate =  flightCommandArgs.get(6) + " " +  flightCommandArgs.get(7);
-            TextParser toParse = new TextParser(fileName);
-            Airline airline = (Airline) toParse.parse();
+            TextParser parseText = new TextParser(fileName);
+            Airline airline = (Airline) parseText.parse();
             // initialize flight values
             checkIfEqual( flightCommandArgs.get(0), airline.getName());
             Flight flight = new Flight(Integer.parseInt(flightCommandArgs.get(1)),
@@ -101,8 +101,8 @@ public class Project2 {
                 System.out.println(flight.toString());
             }
             // dump updated contents into file
-            TextDumper toDump = new TextDumper(fileName);
-            toDump.dump(airline);
+            TextDumper dumpToFile = new TextDumper(fileName);
+            dumpToFile.dump(airline);
             System.exit(1);
         }
 
@@ -120,8 +120,8 @@ public class Project2 {
         }
         // if textFileFlag is on, dump this new airline and flight into a newly created file
         if (optionTextFile == 1) {
-            TextDumper toDump = new TextDumper(fileName);
-            toDump.dump(airline);
+            TextDumper dumpToFile = new TextDumper(fileName);
+            dumpToFile.dump(airline);
         }
         System.exit(1);
     }
