@@ -73,7 +73,7 @@ public class Project1 {
 
       Flight flight = new Flight(Integer.parseInt(args[1]), args[2], departDate, args[5], arrivalDate);
       ArrayList<AbstractFlight> flightArrayList = new ArrayList<>();
-      Airline<Flight> airline = new Airline<>(args[0]);
+      Airline<Flight> airline = new Airline<>(args[0],flightArrayList);
       airline.addFlight(flight);
     }
     //if ReadMe is specified and print is not specified print ReadMe and exit
@@ -89,7 +89,7 @@ public class Project1 {
       arrivalDate = args[7] +" " + args[8];
       Flight flight = new Flight(Integer.parseInt(args[2]), args[3], departDate, args[6], arrivalDate);
       ArrayList<AbstractFlight> flightArrayList = new ArrayList<>();
-      Airline<Flight> airline = new Airline<>(args[1]);
+      Airline<Flight> airline = new Airline<>(args[1],flightArrayList);
       airline.addFlight(flight);
       System.out.println("Airline:" + airline.getName());
       System.out.println(flight.toString());
@@ -102,7 +102,7 @@ public class Project1 {
       arrivalDate = args[8] + " " + args[9];
       Flight flight = new Flight(Integer.parseInt(args[3]), args[4], departDate, args[7], arrivalDate);
       ArrayList<AbstractFlight> flightArrayList = new ArrayList<>();
-      Airline<Flight> airline = new Airline<>(args[2]);
+      Airline<Flight> airline = new Airline<>(args[2],flightArrayList);
       airline.addFlight(flight);
       System.out.println("Airline:" + airline.getName());
       System.out.println(flight.toString());

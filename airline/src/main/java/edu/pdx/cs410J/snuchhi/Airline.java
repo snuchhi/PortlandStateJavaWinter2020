@@ -19,10 +19,11 @@ public class Airline<T extends AbstractFlight> extends AbstractAirline<T> {
      *
      * @param airlineName : initialize airlineName
      */
-    public Airline(String airlineName){
+    public Airline(String airlineName,ArrayList<AbstractFlight> flightArrayList){
         if(airlineName.length()!=0)
         {
             this.airlineName = airlineName;
+            this.flightArrayList = new ArrayList<AbstractFlight>();
         }
         else
             {
