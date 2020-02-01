@@ -5,6 +5,7 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import java.io.File;
 
 public class Project2IT extends InvokeMainTestCase {
 
@@ -143,6 +144,44 @@ public class Project2IT extends InvokeMainTestCase {
     public void testWithCorrectCommandLineArgumentsAndWithPrintAndReadMeOption() {
         InvokeMainTestCase.MainMethodResult result = invokeMain("-print", "-ReadMe", "CS410J", "42", "lax", "01/22/2020", "15:30", "pdx", "01/22/2020" , "17:30");
         assertThat(result.getExitCode(), equalTo(1));
+    }
+
+    @Test
+    public void testTextFileOptionWithCorrectArguments(){
+        InvokeMainTestCase.MainMethodResult result = invokeMain("-textFile", "test.txt", "CS410J", "42", "lax", "01/22/2020", "15:30", "pdx", "01/22/2020" , "17:30");
+        assertThat(result.getExitCode(), equalTo(1));
+        File testFile = new File("test.txt");
+        if(testFile.delete()){
+            System.out.println("Created file for testing and deleting");
+        }else{
+            System.out.println("Testing for texFile with correct arguments failed");
+        }
+    }
+
+    @Test
+    public void testTextFileWithLessArguments(){
+        MainMethodResult result = invokeMain("-textFile", "test.txt", "CS410J", "42", "pdx");
+        assertThat(result.getExitCode(), equalTo(1));
+        assertThat(result.getTextWrittenToStandardError(), containsString(
+                "Missing command line arguments ,too few command line arguments, please enter command line arguments\n" +
+                        "args are (in this order):\n" +
+                        "\tAirline - name of airline\n" +
+                        "\tflightNumber\n" +
+                        "\tsrc - Three-letter code of departure\n" +
+                        "\tdepart - Departure date and time (24-hour time)\n" +
+                        "\tdest - Three-letter code of arrival airport\n" +
+                        "\tarrive - Arrival date and time (24-hour time)\n" +
+                        "\toptions are (options may appear in any order):\n" +
+                        "\t-textFile fileName\n" +
+                        "\t-print\n" +
+                        "\t-README"));
+
+    }
+    @Test
+    public void testTextFileWithManyCommandLineArgumentsAndWithPrintOption() {
+        InvokeMainTestCase.MainMethodResult result = invokeMain("-textFile", "test.txt","print" ,"CS410J", "42", "lax", "01/22/2020", "15:30", "pdx", "01/22/2020", "17:30", "xxxx");
+        assertThat(result.getExitCode(), equalTo(1));
+        assertThat(result.getTextWrittenToStandardError(), containsString("Additional command line arguments present please reenter"));
     }
 
 }

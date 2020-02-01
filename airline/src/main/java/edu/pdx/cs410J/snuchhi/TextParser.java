@@ -19,14 +19,11 @@ public class TextParser implements AirlineParser {
     public TextParser(String fileName) {
         // check to look for special characters in filename
 
-        if (!fileName.matches("([a-z]|[A-Z]|[0-9]|[.])*")) {
-            throw new IllegalArgumentException("File name invalid.");
-        }
-        // parse only if the file exists
-        File check = new File(fileName);
-        if (!check.exists()) {
-            throw new IllegalArgumentException("File does not exist.");
-        }
+       // if (!fileName.matches("([a-z]|[A-Z]|[0-9]|[.])*")) {
+        //    throw new IllegalArgumentException("File name invalid.");
+      //  }
+
+
         this.fileName = fileName;
     }
     //parse the contents of the text file and create flight details.

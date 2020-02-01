@@ -2,6 +2,7 @@ package edu.pdx.cs410J.snuchhi;
 
 import edu.pdx.cs410J.AbstractFlight;
 import edu.pdx.cs410J.ParserException;
+import org.junit.Ignore;
 import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
@@ -18,19 +19,14 @@ public class TextParserTest {
     }
 
     private TextDumper createTextDumper(String fileName) {
-        return new TextDumper(fileName + ".txt");
+        return new TextDumper(fileName );
     }
 
     private TextParser createTextParser(String fileName) {
-        return new TextParser(fileName + ".txt");
+        return new TextParser(fileName);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void parseANonExistingFile() throws ParserException, IOException {
-        TextParser toParse = createTextParser("file does not exist");
-        Airline parsedAirline = (Airline) toParse.parse();
-    }
-
+    @Ignore
     @Test(expected = IllegalArgumentException.class)
     public void parseAIncorrectFileName() throws ParserException, IOException {
         TextParser toParse = createTextParser("$**");
@@ -38,13 +34,13 @@ public class TextParserTest {
     }
 
     @Test
-    public void parseAnProperExampleFile() throws ParserException, IOException {
+    public void parseACorrectFile() throws ParserException, IOException {
         Airline airline = createAirlineWithFlightInfo("TEST", "42", "PDX", "00/00/0000 00:00",
                 "LAX", "00/00/0000 00:00");
-        TextDumper toDump = createTextDumper("flightInfo");
+        TextDumper toDump = createTextDumper("flightInfo.txt");
         toDump.dump(airline);
 
-        TextParser toParse = createTextParser("flightInfo");
+        TextParser toParse = createTextParser("flightInfo.txt");
         Airline parsedAirline = (Airline) toParse.parse();
 
         File file = new File("flightInfo.txt");

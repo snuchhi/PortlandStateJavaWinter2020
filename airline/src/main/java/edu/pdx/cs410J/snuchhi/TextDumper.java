@@ -19,9 +19,9 @@ public class TextDumper implements AirlineDumper {
      */
     public TextDumper(String fileName)  {
 
-        if(!fileName.matches("([a-z]|[A-Z]|[0-9]|[.])*")){
-            throw new IllegalArgumentException("File name is invalid, cannot dump");
-        }
+      //  if(!fileName.matches("([a-z]|[A-Z]|[0-9]|[.])*")){
+        //    throw new IllegalArgumentException("File name is invalid, cannot dump");
+      //  }
         this.fileName = fileName;
     }
 
@@ -53,7 +53,11 @@ public class TextDumper implements AirlineDumper {
             }
 
         }catch(IOException e){
-            System.out.println("File does not exist");
+            File file = new File(this.fileName);
+            FileWriter writer = new FileWriter(file, true);
+            BufferedWriter bfWriter = new BufferedWriter(writer);
+            file.createNewFile();
+            bufferWriter(airlineName, flightArrayList, writer, bfWriter);
         }
 
     }
