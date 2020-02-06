@@ -1,0 +1,3 @@
+The airline is:Test which has the following flights: 
+Flight:0
+Flight 42 departs PDX at 12/12/20, 12:00 AM arrives LAX at 12/12/20, 1:30 AM duration of the flight is : 90 minutes

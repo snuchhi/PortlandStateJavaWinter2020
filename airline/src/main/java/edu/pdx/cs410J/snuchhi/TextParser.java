@@ -42,8 +42,8 @@ public class TextParser implements AirlineParser {
             while (firstLine!=null){
                 flightArgs = firstLine.split(" ");
                 Flight flight = new Flight(parseInt(flightArgs[0]), flightArgs[1],
-                        flightArgs[2] + " " + flightArgs[3],
-                        flightArgs[4], flightArgs[5] + " " + flightArgs[6]);
+                        flightArgs[2] + " " + flightArgs[3] + " " + flightArgs[4],
+                        flightArgs[5], flightArgs[5] + " " + flightArgs[6] + " " + flightArgs[7]);
 
                 airline.addFlight(flight);
                 firstLine = bfReader.readLine();

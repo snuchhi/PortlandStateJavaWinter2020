@@ -47,7 +47,7 @@ public class Airline<T extends AbstractFlight> extends AbstractAirline<T> {
     @Override
     public void addFlight(AbstractFlight abstractFlight) {
 
-        flightArrayList.add(abstractFlight);
+        this.flightArrayList.add(abstractFlight);
     }
 
     /**
@@ -56,7 +56,7 @@ public class Airline<T extends AbstractFlight> extends AbstractAirline<T> {
      */
     @Override
     public Collection getFlights() {
-        return flightArrayList;
+        return this.flightArrayList;
     }
 }
 

@@ -9,16 +9,17 @@ import java.util.ArrayList;
  * Unit tests for the {@link Flight} class.
  */
 public class FlightTest {
-  @Ignore
+
+    @Ignore
   @Test(expected = UnsupportedOperationException.class)
   public void getArrivalStringNeedsToBeImplemented() {
-    Flight flight = new Flight(00, "src",  "00/00/0000 00:00","dst", "00/00/0000 00:00");
-    assertThat(flight.getArrivalString(), equalTo("Flight 0 departs src at 00/00/0000 00:00 arrives dst at 00/00/0000 00:00"));
+    Flight flight = new Flight(00, "las",  "12/12/2020 12:00 AM","lax", "12/12/2020 02:00 AM");
+    assertThat(flight.getArrivalString(), equalTo("Flight 0 departs src at 12/12/2020 12:00 AM arrives dst at 12/12/2020 02:00 AM"));
   }
 
   @Test
   public void initiallyAllFlightsHaveTheSameNumber() {
-    Flight flight = new Flight(42, "tst", "00/00/0000 00:00", "tst", "00/00/0000 00:00");
+    Flight flight = new Flight(42, "pdx", "12/12/2020 12:00 AM", "lax", "12/12/2020 02:00 AM");
     assertThat(flight.getNumber(), equalTo(42));
   }
 
@@ -29,15 +30,15 @@ public class FlightTest {
   @Test
   public void checkForAllCorrectValues(){
     String src = "lax";
-    String depart = "01/22/2020 15:15";
+    String depart = "01/22/2020 10:15 AM";
     String dest = "pdx";
-    String arrive = "01/22/2020 17:00";
+    String arrive = "01/22/2020 11:50 AM";
     createFlightForFullCommandLineValidation(src,depart, dest, arrive);
   }
 
   //This is a test for source validation
   private Flight createFlightForSrcValidation(String src){
-    return new Flight(42, src, "00/00/0000 00:00", "dst", "00/00/0000 00:00");
+    return new Flight(42, src, "12/12/2020 12:00 AM", "pdx", "12/12/2020 02:00 AM");
   }
 
   @Test
@@ -68,7 +69,7 @@ public class FlightTest {
   }
   //This is a test for destination validation
   private Flight createFlightForDestValidation(String dst){
-    return new Flight(42, "tst", "00/00/0000 00:00", dst, "00/00/0000 00:00");
+    return new Flight(42, "pdx", "12/12/2020 12:00 AM", dst, "12/12/2020 02:00 AM");
   }
  // the test is to validate that the destination string is correctly input
   @Test
@@ -100,12 +101,12 @@ public class FlightTest {
 
   //Validation for departure(date and time format)
   private Flight createFlightForDepartValidation(String depart) {
-    return new Flight(00, "tst", depart, "tst", "00/00/0000 00:00");
+    return new Flight(00, "pdx", depart, "lax", "12/12/2020 03:00 AM");
   }
 
   @Test
   public void whenDepartIsValid(){
-    String depart = "00/00/0000 00:00";
+    String depart = "12/12/2020 12:00 AM";
     createFlightForDepartValidation(depart);
   }
 
@@ -117,34 +118,34 @@ public class FlightTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void whenDepartYearIsInvalid(){
-    String depart = "00/00/00000 00:00";
+    String depart = "12/12/20200 12:00 AM";
     createFlightForDepartValidation(depart);
   }
   @Test(expected = IllegalArgumentException.class)
   public void whenDepartDateIsInvalid(){
-    String depart = "00/000/0000 00:00";
+    String depart = "12/112/2020 12:00 AM";
     createFlightForDepartValidation(depart);
   }
   @Test(expected = IllegalArgumentException.class)
   public void whenDepartMonthIsInvalid(){
-    String depart = "000/00/0000 00:00";
+    String depart = "112/12/2020 12:00 AM";
     createFlightForDepartValidation(depart);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void whenDepartTimeIsInvalid(){
-    String invalidDepart = "00/00/0000 000:00";
+    String invalidDepart = "12/12/2020 121:00 AM";
     createFlightForDepartValidation(invalidDepart);
   }
 
   //Validation for arrival(date and time format)
   private Flight createFlightForArrivalValidation(String arrive) {
-    return new Flight(00, "tst","00/00/0000 00:00" , "tst",arrive );
+    return new Flight(00, "tst","12/12/2020 11:00 AM0" , "tst",arrive );
   }
 
   @Test
   public void whenArrivalIsValid(){
-    String arrive = "00/00/0000 00:00";
+    String arrive = "12/12/2020 12:00 AM";
     createFlightForDepartValidation(arrive);
   }
 
@@ -156,23 +157,23 @@ public class FlightTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void whenArrivalYearIsInvalid(){
-    String arrive = "00/00/00000 00:00";
+    String arrive = "12/12/20200 12:00 AM";
     createFlightForDepartValidation(arrive);
   }
   @Test(expected = IllegalArgumentException.class)
   public void whenArrivalDateIsInvalid(){
-    String arrive = "00/000/0000 00:00";
+    String arrive = "12/112/2020 12:00 AM";
     createFlightForDepartValidation(arrive);
   }
   @Test(expected = IllegalArgumentException.class)
   public void whenArrivalMonthIsInvalid(){
-    String arrive = "000/00/0000 00:00";
+    String arrive = "112/12/2020 12:00 AM";
     createFlightForDepartValidation(arrive);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void whenArrivalTimeIsInvalid(){
-    String arrive = "00/00/0000 000:00";
+    String arrive = "12/12/2020 112:00 AM";
     createFlightForDepartValidation(arrive);
   }
 

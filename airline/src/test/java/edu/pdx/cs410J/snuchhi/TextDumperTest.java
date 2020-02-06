@@ -35,14 +35,14 @@ public class TextDumperTest {
     @Test(expected = IllegalArgumentException.class)
     public void IncorrectFileNameTest() throws ParserException, IOException {
         TextDumper toDump = createTextDumper("&&&");
-        Airline exampleAirline1 = createAirlineWithFlightInfo("CS410J", "00", "PDX", "00/00/0000 00:00", "LAX", "00/00/0000 00:00");
+        Airline exampleAirline1 = createAirlineWithFlightInfo("CS410J", "00", "PDX", "00/00/0000 00:00 AM", "LAX", "00/00/0000 00:00 AM");
         toDump.dump(exampleAirline1);
     }
 
     @Test
     public void  createAFlightWithOneAirlineInfo() throws IOException {
         TextDumper dumpText = createTextDumper("flightInfo");
-        Airline airline = createAirlineWithFlightInfo("CS410J", "00", "PDX", "00/00/0000 00:00", "LAX", "00/00/0000 00:00");
+        Airline airline = createAirlineWithFlightInfo("CS410J", "00", "PDX", "12/12/2020 12:00 AM", "LAX", "12/12/2020 02:00 AM");
         dumpText.dump(airline);
         File file = new File("flightInfo.txt");
         if(file.delete()){
