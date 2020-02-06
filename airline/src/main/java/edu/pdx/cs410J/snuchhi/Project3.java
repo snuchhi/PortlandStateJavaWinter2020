@@ -172,10 +172,11 @@ public class Project3 {
      * print the read me and exit
      */
     public static void printReadMeAndExit() {
-
-        System.out.println("\n" + "This is Project2 for CS510 Advanced Java Course which aims at designing an Airline Application" +
+        System.out.println("\n" + "This is Project3 for CS510 Advanced Java Course which aims at designing an Airline Application" +
                 "\tCreated/Developed by: Shruti Nuchhi" + "\n" +
-                "The project aims at created classes namely TextDumper and TextParser extended from Abstract classes. \n The text dumper will dump the" +
+                "The project aims at created classes namely PrettyPrinter which is abstracted from airline dumper class. " +
+                "\n The pretty printer option is used to print the airline details in a nice way" +
+                "\n The text dumper will dump the" +
                 "contents of the airline details to text file. \n The parser is responsible for parsing the text file contents and creating the flight." +
                 "If the -print option is provided then the details of the flight will be displayed. \n If -README is specified then README is displayed " +
                 "and then program exit gracefully. "

@@ -60,7 +60,6 @@ public class Project2 {
         }
         //if the number of arguments are greater than 8 + the number of options entered
         if (args.length > 8 + numberOfOptions) {
-            System.out.println(args.length);
             printErrorMessageAndExit("Additional command line arguments present please reenter");
         }
 

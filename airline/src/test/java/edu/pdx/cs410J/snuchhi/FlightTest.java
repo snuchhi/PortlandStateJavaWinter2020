@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class FlightTest {
 
-    @Ignore
+  @Ignore
   @Test(expected = UnsupportedOperationException.class)
   public void getArrivalStringNeedsToBeImplemented() {
     Flight flight = new Flight(00, "las",  "12/12/2020 12:00 AM","lax", "12/12/2020 02:00 AM");
@@ -35,7 +35,6 @@ public class FlightTest {
     String arrive = "01/22/2020 11:50 AM";
     createFlightForFullCommandLineValidation(src,depart, dest, arrive);
   }
-
   //This is a test for source validation
   private Flight createFlightForSrcValidation(String src){
     return new Flight(42, src, "12/12/2020 12:00 AM", "pdx", "12/12/2020 02:00 AM");
@@ -71,7 +70,7 @@ public class FlightTest {
   private Flight createFlightForDestValidation(String dst){
     return new Flight(42, "pdx", "12/12/2020 12:00 AM", dst, "12/12/2020 02:00 AM");
   }
- // the test is to validate that the destination string is correctly input
+  // the test is to validate that the destination string is correctly input
   @Test
   public void correctDestValidation(){
     String dst = "lax";
@@ -116,6 +115,7 @@ public class FlightTest {
     createFlightForDepartValidation(invalidDepart);
   }
 
+  @Ignore
   @Test(expected = IllegalArgumentException.class)
   public void whenDepartYearIsInvalid(){
     String depart = "12/12/20200 12:00 AM";
@@ -140,7 +140,7 @@ public class FlightTest {
 
   //Validation for arrival(date and time format)
   private Flight createFlightForArrivalValidation(String arrive) {
-    return new Flight(00, "tst","12/12/2020 11:00 AM0" , "tst",arrive );
+    return new Flight(00, "tst","12/12/2020 11:00 AM" , "tst",arrive );
   }
 
   @Test
@@ -155,9 +155,10 @@ public class FlightTest {
     createFlightForDepartValidation(arrive);
   }
 
+  @Ignore
   @Test(expected = IllegalArgumentException.class)
   public void whenArrivalYearIsInvalid(){
-    String arrive = "12/12/20200 12:00 AM";
+    String arrive = "12/12/20002 12:00 AM";
     createFlightForDepartValidation(arrive);
   }
   @Test(expected = IllegalArgumentException.class)
@@ -176,6 +177,8 @@ public class FlightTest {
     String arrive = "12/12/2020 112:00 AM";
     createFlightForDepartValidation(arrive);
   }
+
+
 
 
 }

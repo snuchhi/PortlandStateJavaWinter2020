@@ -15,6 +15,16 @@ public class Airline<T extends AbstractFlight> extends AbstractAirline<T> {
     private String airlineName;
     private ArrayList<AbstractFlight>  flightArrayList = new ArrayList<>();
 
+    /**
+     *
+     * @param name - airline name
+     */
+    public Airline(String name) {
+        super();
+        this.flightArrayList = new ArrayList<AbstractFlight>();
+        this.airlineName = name;
+    }
+
     /**this is an airline class constructor that initializes the params
      *
      * @param airlineName : initialize airlineName
