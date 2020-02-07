@@ -32,7 +32,7 @@ public class TextParserTest {
         TextParser toParse = createTextParser("$**");
         Airline parsedAirline = (Airline) toParse.parse();
     }
-    @Ignore
+
     @Test
     public void parseACorrectFile() throws ParserException, IOException {
         Airline airline = createAirlineWithFlightInfo("TEST", "42", "pdx", "12/12/2020 12:00 AM",

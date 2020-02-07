@@ -178,6 +178,26 @@ public class FlightTest {
     createFlightForDepartValidation(arrive);
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void DepartAirportCodeNotInAirportClass() {
+    Flight flight = new Flight(123, "PX", "12/12/2020 12:00 AM", "LAX", "12/12/2020 14:00 pm");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void ArriveAirportCodeNotInAirportClass() {
+    Flight flight = new Flight(123, "PDX", "12/12/2020 12:00 AM", "AX", "12/12/2020 14:00 pm");
+  }
+
+  @Test
+  public void FlightDescriptionShouldBeMatched() {
+    int number = 123;
+    String src = "PDX";
+    String departDate = "12/12/2020 11:22 PM";
+    String dest = "PDX";
+    String arriveDate = "12/13/2020 11:20 PM";
+    Flight flight = new Flight(number,src,departDate,dest,arriveDate);
+    assertThat(flight.toString(), equalTo("Flight 123 departs PDX at 12/12/20, 11:22 PM arrives PDX at 12/13/20, 11:20 PM"));
+  }
 
 
 

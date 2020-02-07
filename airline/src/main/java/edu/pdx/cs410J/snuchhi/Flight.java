@@ -18,11 +18,11 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
    * dest : 3 letter destination code
    * arrive : the arrival date and time
    */
-  private int flightNum ;
-  private String src;
-  private Date depart;
-  private String dest;
-  private Date arrive;
+  private final int flightNum ;
+  private final String src;
+  private final Date depart;
+  private final String dest;
+  private final Date arrive;
 
   /**
    * Constructor
@@ -155,7 +155,8 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
   public String getDepartureString() {
 
     DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);
-    return df.format(this.depart).toString();
+    return df.format(this.depart);
+   // return this.depart.toString();
   }
 
   /**
@@ -176,7 +177,8 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
   @Override
   public String getArrivalString() {
     DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);
-    return df.format(this.arrive).toString();
+    return df.format(this.arrive);
+    //return this.arrive.toString();
   }
 
   /**
@@ -195,11 +197,16 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
    */
   @Override
   public int compareTo(Flight o) {
-    int compares = this.src.compareTo(((Flight) o).getSource());
-    if (compares == 0) {
-      compares = this.depart.compareTo(((Flight) o).getDeparture());
-    }
-    return compares;
+    String src = o.getSource();
+    String dest = o.getDestination();
+    int compare = this.src.compareTo(src);
+    if (compare == 0)
+      compare = this.dest.compareTo(dest);
+    if (compare == 0)
+      return 0;
+    else
+      return compare;
   }
+
 }
 

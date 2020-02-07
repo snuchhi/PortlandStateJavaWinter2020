@@ -108,7 +108,7 @@ public class Project3 {
         //if file exists, parse file contents
         if (optionTextFile == 1  && exists.isFile()) {
             departDate = flightCommandArgs.get(3) + " " + flightCommandArgs.get(4) + " " + flightCommandArgs.get(5);
-            arrivalDate = flightCommandArgs.get(7) + " " + flightCommandArgs.get(7) + " " + flightCommandArgs.get(9);
+            arrivalDate = flightCommandArgs.get(7) + " " + flightCommandArgs.get(8) + " " + flightCommandArgs.get(9);
             TextParser parseText = new TextParser(fileName);
             Airline airline = (Airline) parseText.parse();
             // initialize flight values
@@ -116,16 +116,13 @@ public class Project3 {
             Flight flight = new Flight(Integer.parseInt(flightCommandArgs.get(1)),
                     flightCommandArgs.get(2), departDate, flightCommandArgs.get(6), arrivalDate);
             airline.addFlight(flight);
-            // if printFlag is on, print new flight description
-            if (optionPrint == 1)
-               {
-                    System.out.println("Airline: " + airline.getName());
-                    System.out.println(flight.toString());
-                }
+
             if (optionPrettyPrint == 1) {
+
                 PrettyPrinter prt = new PrettyPrinter(prettyFile);
                 prt.dump(airline);
             }
+
             // dump updated contents into file
             TextDumper dumpToFile = new TextDumper(fileName);
             dumpToFile.dump(airline);
@@ -133,7 +130,6 @@ public class Project3 {
 
 
         }
-
 
         ArrayList<AbstractFlight> flightArray = new ArrayList<AbstractFlight>();
         Airline airline = new Airline(flightCommandArgs.get(0), flightArray);
@@ -152,10 +148,13 @@ public class Project3 {
             TextDumper dumpToFile = new TextDumper(fileName);
             dumpToFile.dump(airline);
         }
+
         if (optionPrettyPrint == 1) {
+
             PrettyPrinter prt = new PrettyPrinter(prettyFile);
             prt.dump(airline);
         }
+
         System.exit(1);
     }
 

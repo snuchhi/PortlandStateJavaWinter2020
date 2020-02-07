@@ -5,10 +5,14 @@ import edu.pdx.cs410J.AirlineParser;
 import edu.pdx.cs410J.ParserException;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.util.Date;
 
 import static java.lang.Integer.parseInt;
 
@@ -39,11 +43,24 @@ public class TextParser implements AirlineParser {
             ArrayList<AbstractFlight> flightArrayList = new ArrayList<AbstractFlight>();
             Airline airline = new Airline<>(firstLine,flightArrayList);
             firstLine = bfReader.readLine();
+
             while (firstLine!=null){
+                System.out.println(firstLine);
                 flightArgs = firstLine.split(" ");
+                String departDate = flightArgs[2] + " " + flightArgs[3] + " " + flightArgs[4] ;
+                String arriveDate = flightArgs[6] + " " + flightArgs[7] + " " + flightArgs[8];
+                DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);
+                try {
+                    Date parseDepartDate = df.parse(departDate);
+                    Date parseArriveDate = df.parse(arriveDate);
+                    departDate = new SimpleDateFormat("MM/dd/YYYY hh:mm aa").format(parseDepartDate);
+                    arriveDate = new SimpleDateFormat("MM/dd/YYYY hh:mm aa").format(parseArriveDate);
+
+                } catch (ParseException e) {
+                    throw new ParserException("Cannot parse departure date time");
+                }
                 Flight flight = new Flight(parseInt(flightArgs[0]), flightArgs[1],
-                        flightArgs[2] + " " + flightArgs[3] + " " + flightArgs[4],
-                        flightArgs[5], flightArgs[5] + " " + flightArgs[6] + " " + flightArgs[7]);
+                        departDate,flightArgs[5],arriveDate);
 
                 airline.addFlight(flight);
                 firstLine = bfReader.readLine();
