@@ -59,9 +59,8 @@ public class PrettyPrinter implements AirlineDumper {
                 bufferedWriter.write(flight.toString());
                 bufferedWriter.write(" duration of the flight is : " + flight.timesDifferenceInMinutes() + " minutes");
                 bufferedWriter.newLine();
-                System.out.println("The airline details dumped to pretty file.");
-
             }
+            System.out.println("The airline details dumped to pretty file.");
 
             bufferedWriter.close();
 

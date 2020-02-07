@@ -72,7 +72,9 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>edu.pdx.cs410J.whitlock.Project1</mainClass>
+              <mainClass>edu.pdx.cs410J.snuchhi.Project1</mainClass>
+              <mainClass>edu.pdx.cs410J.snuchhi.Project2</mainClass>
+              <mainClass>edu.pdx.cs410J.snuchhi.Project3</mainClass>
             </manifest>
           </archive>
         </configuration>

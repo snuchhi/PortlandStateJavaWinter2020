@@ -263,17 +263,19 @@ public class Project3IT extends InvokeMainTestCase {
                 "and the duration of flight is: 61 minutes\nThe airline details dumped to pretty file.\n"));
     }
 
+
+
     @Test
     public void testTextFileOptionIfFileExistsDifferentAirline(){
-        MainMethodResult result = invokeMain("-textFile", "Example.txt", "Test", "123", "PDX", "12/12/2020", "10:10", "AM", "LAX", "12/12/2020", "11:11", "AM");
+        MainMethodResult result = invokeMain("-textFile", "test.txt", "Test", "123", "PDX", "12/12/2020", "10:10", "AM", "LAX", "12/12/2020", "11:11", "AM");
         assertThat(result.getExitCode(), equalTo(1));
         try {
-            MainMethodResult nextResult = invokeMain("-textFile", "pretty.txt", "Test1", "123", "PDX", "12/12/2020", "10:10", "AM", "LAX", "12/12/2020", "11:11", "AM");
+            MainMethodResult nextResult = invokeMain("-textFile", "test.txt", "Test1", "123", "PDX", "12/12/2020", "10:10", "AM", "LAX", "12/12/2020", "11:11", "AM");
             assertThat(nextResult.getExitCode(), equalTo(1));
         } catch (IllegalArgumentException e) {
             //IllegalArgumentException Caught
         }
-        File file = new File("pretty.txt");
+        File file = new File("test.txt");
         if(file.delete()){
             System.out.println("Test to create file Passed.");
         }else{
