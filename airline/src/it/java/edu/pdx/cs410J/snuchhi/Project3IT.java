@@ -258,9 +258,9 @@ public class Project3IT extends InvokeMainTestCase {
     public void prettyShouldWorkAndDisplayTHeCorrectMessage() {
         MainMethodResult result = invokeMain("-pretty", "-", "Test", "123", "PDX", "12/12/2020", "10:10", "AM", "LAX", "12/12/2020", "11:11", "AM");
         //assertThat(result.getExitCode(), equalTo(0));
-        assertThat(result.getTextWrittenToStandardOut(), equalTo("The airline is : Test which has the following flights scheduled\n" +
-                "Flight 123 departs PDX at 12/12/20, 10:10 AM arrives LAX at 12/12/20, 11:11 AM"+ " " +
-                "and the duration of flight is: 61 minutes\nThe airline details dumped to pretty file.\n"));
+        assertThat(result.getTextWrittenToStandardOut(), equalTo("The airline is : Test which has the following flights scheduled" +
+                "\nThe flight number 123:departs from airport PDX at 12/12/20, 10:10 AM and arrives in airport LAX at 12/12/20, 11:11 AM and the duration of flight is: 61 minutes." +
+                "\n\nThe airline details dumped to pretty file.\n"));
     }
 
 

@@ -111,7 +111,7 @@ public class FlightTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void whenDepartIsNotInDateFormat(){
-    String invalidDepart = "xx xx:xx";
+    String invalidDepart = "xx/xx/xx xx:xx xx";
     createFlightForDepartValidation(invalidDepart);
   }
 
@@ -151,7 +151,7 @@ public class FlightTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void whenArrivalIsNotInDateFormat(){
-    String arrive = "xx xx:xx";
+    String arrive = "xx/xx/xx xx:xx xx";
     createFlightForDepartValidation(arrive);
   }
 
