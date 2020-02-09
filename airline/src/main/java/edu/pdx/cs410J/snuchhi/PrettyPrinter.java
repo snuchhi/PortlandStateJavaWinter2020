@@ -33,47 +33,53 @@ public class PrettyPrinter implements AirlineDumper {
         int num_flights = flights.size();
 
         if (fileName.equals("-")) {
-            fileName = "prettyFile.txt";
             System.out.println("The airline is : " + airlineName + " which has the following flights scheduled");
-
             for (int i = 0; i < num_flights; i++) {
                 Flight flight = (Flight) flights.get(i);
-                System.out.println(flight.toString() + " and the duration of flight is: " + flight.timesDifferenceInMinutes() + " minutes");
+                System.out.println("The flight number " + flight.getNumber() + ":" +
+                        "departs from airport " + flight.getSource() + " at " + flight.getDepartureString() +
+                        " and arrives in airport " + flight.getDestination() + " at " + flight.getArrivalString() +
+                        " and the duration of flight is: " + flight.timesDifferenceInMinutes() + " minutes.\n"
+                );
             }
         }
-        BufferedWriter bufferedWriter = null;
-        try {
-            FileWriter fileWriter = new FileWriter(fileName);
-            bufferedWriter = new BufferedWriter(fileWriter);
 
-            //write airline name to file
-            bufferedWriter.write("The airline is:" + abstractAirline.getName() + " which has the following flights: ");
-            bufferedWriter.newLine();
-
-            //write the flight details into pretty file
-            num_flights = flights.size();
-            for (int i = 0; i < num_flights; i++) {
-                bufferedWriter.write("Flight:" + i);
-                bufferedWriter.newLine();
-                Flight flight = (Flight) flights.get(i);
-                bufferedWriter.write(flight.toString());
-                bufferedWriter.write(" duration of the flight is : " + flight.timesDifferenceInMinutes() + " minutes");
-                bufferedWriter.newLine();
-            }
-            System.out.println("The airline details dumped to pretty file.");
-
-            bufferedWriter.close();
-
-        } catch (FileNotFoundException e) {
-
+            BufferedWriter bufferedWriter = null;
             try {
-                File file = new File(this.fileName);
-                file.createNewFile();
-            } catch (IOException e1) {
-                throw new IOException("File does not exist and cannot create a new file;");
+                FileWriter fileWriter = new FileWriter(fileName);
+                bufferedWriter = new BufferedWriter(fileWriter);
+
+                //write airline name to file
+                bufferedWriter.write("The airline is:" + abstractAirline.getName() + " which has the following flights: ");
+                bufferedWriter.newLine();
+
+                //write the flight details into pretty file
+                num_flights = flights.size();
+                for (int i = 0; i < num_flights; i++) {
+                    bufferedWriter.write("Flight:" + i);
+                    bufferedWriter.newLine();
+                    Flight flight = (Flight) flights.get(i);
+                    bufferedWriter.write("The flight number " + flight.getNumber() + ":" +
+                            "departs from airport " + flight.getSource() + " at " + flight.getDepartureString() +
+                            " and arrives in airport " + flight.getDestination() + " at " + flight.getArrivalString() +
+                            " and the duration of flight is: " + flight.timesDifferenceInMinutes() + " minutes.\n");
+                    bufferedWriter.newLine();
+
+                }
+                System.out.println("The airline details dumped to pretty file.");
+                bufferedWriter.close();
+
+            } catch (FileNotFoundException e) {
+
+                try {
+                    File file = new File(this.fileName);
+                    file.createNewFile();
+                } catch (IOException e1) {
+                    throw new IOException("File does not exist and cannot create a new file;");
+                }
             }
         }
+
     }
 
-}
 

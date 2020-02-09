@@ -58,6 +58,8 @@ public class Airline<T extends AbstractFlight> extends AbstractAirline<T> {
     public void addFlight(AbstractFlight abstractFlight) {
 
         this.flightArrayList.add(abstractFlight);
+
+
     }
 
     /**

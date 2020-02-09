@@ -33,23 +33,21 @@ public class TextParser implements AirlineParser {
     //parse the contents of the text file and create flight details.
     @Override
     public AbstractAirline parse() throws ParserException {
-
         String[] flightArgs;
         try {
             FileReader fileReader = new FileReader(this.fileName);
             BufferedReader bfReader = new BufferedReader(fileReader);
             String firstLine = bfReader.readLine();
-
+            String airlineName = firstLine;
             ArrayList<AbstractFlight> flightArrayList = new ArrayList<AbstractFlight>();
             Airline airline = new Airline<>(firstLine,flightArrayList);
             firstLine = bfReader.readLine();
 
-            while (firstLine!=null){
-                System.out.println(firstLine);
+            while (firstLine!=null) {
                 flightArgs = firstLine.split(" ");
-                String departDate = flightArgs[2] + " " + flightArgs[3] + " " + flightArgs[4] ;
+                String departDate = flightArgs[2] + " " + flightArgs[3] + " " + flightArgs[4];
                 String arriveDate = flightArgs[6] + " " + flightArgs[7] + " " + flightArgs[8];
-                DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);
+                DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
                 try {
                     Date parseDepartDate = df.parse(departDate);
                     Date parseArriveDate = df.parse(arriveDate);
@@ -59,14 +57,16 @@ public class TextParser implements AirlineParser {
                 } catch (ParseException e) {
                     throw new ParserException("Cannot parse departure date time");
                 }
+
                 Flight flight = new Flight(parseInt(flightArgs[0]), flightArgs[1],
-                        departDate,flightArgs[5],arriveDate);
+                        departDate, flightArgs[5], arriveDate);
 
                 airline.addFlight(flight);
                 firstLine = bfReader.readLine();
             }
             bfReader.close();
             return airline;
+
         } catch (IOException e){
             System.out.println("Some IO exception occurred");
         }

@@ -70,7 +70,6 @@ public class Project3 {
         }
         //if the number of arguments are greater than 9 + the number of options entered
         if (args.length > 10 + numberOfOptions) {
-            System.out.println(args.length);
             printErrorMessageAndExit("Additional command line arguments present please reenter");
         }
 
@@ -118,7 +117,6 @@ public class Project3 {
             airline.addFlight(flight);
 
             if (optionPrettyPrint == 1) {
-
                 PrettyPrinter prt = new PrettyPrinter(prettyFile);
                 prt.dump(airline);
             }
@@ -137,6 +135,7 @@ public class Project3 {
         arrivalDate = flightCommandArgs.get(7) + " " + flightCommandArgs.get(8) + " " + flightCommandArgs.get(9);
         Flight flight = new Flight(Integer.parseInt(flightCommandArgs.get(1)),
                 flightCommandArgs.get(2), departDate, flightCommandArgs.get(6), arrivalDate);
+
         airline.addFlight(flight);
         // if printFlag is on, print new flight description
         if (optionPrint == 1) {

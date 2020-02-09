@@ -1,3 +1,0 @@
-The airline is:Test which has the following flights: 
-Flight:0
-Flight 123 departs PDX at 12/12/20, 10:10 AM arrives LAX at 12/12/20, 11:11 AM duration of the flight is : 61 minutes
