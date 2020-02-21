@@ -1,0 +1,4 @@
+The airline is:Project3 which has the following flights: 
+Flight:0
+The flight number 1200:departs from airport LNK at 1/10/20, 10:00 AM and arrives in airport MFE at 1/10/20, 12:16 PM and the duration of flight is: 136 minutes.
+

@@ -41,6 +41,9 @@ public class Airline<T extends AbstractFlight> extends AbstractAirline<T> {
         }
     }
 
+    public Airline(Airline airline) {
+    }
+
     /**
      *
      * @return - the airlineName
@@ -69,6 +72,16 @@ public class Airline<T extends AbstractFlight> extends AbstractAirline<T> {
     @Override
     public Collection getFlights() {
         return this.flightArrayList;
+    }
+
+    public void printAirlineName() {
+        System.out.println(this.airlineName);
+    }
+
+    public void printFlights() {
+        for(AbstractFlight f : this.flightArrayList){
+            System.out.println(f.getNumber() + " " + f.getSource() + " " + f.getDepartureString() + " " + f.getDestination() + " " + f.getArrivalString());
+        }
     }
 }
 
