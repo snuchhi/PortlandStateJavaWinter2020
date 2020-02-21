@@ -37,6 +37,7 @@ public class Project4 {
         String departDate = "";
         String arrivalDate = "";
         String fileName = "";
+        String textFileName = "";
 
         int numberOfOptions = 0;
 
@@ -55,10 +56,20 @@ public class Project4 {
 
             //if -textFile, turn text file flag on, also, store the next argument as the file name
             if (args[i].equals("-textFile")) {
-                fileName = args[i + 1];
+                textFileName = args[i + 1];
                 optionTextFile = 1;
                 numberOfOptions += 2;
                 continue;
+            }
+            if(args[i].equals("-xmlFile")){
+                xmlFile = args[i+1];
+                optionXmlFile = 1;
+                numberOfOptions += 2;
+                continue;
+            }
+
+            if(optionTextFile == 1 && optionXmlFile == 1){
+                printErrorMessageAndExit("Both text file and xml file cannot be put as options, enter only one of them");
             }
 
             if(args[i].equals("-pretty")){
@@ -67,11 +78,7 @@ public class Project4 {
                 numberOfOptions += 2;
             }
 
-            if(args[i].equals("-xmlFile")){
-                xmlFile = args[i+1];
-                optionXmlFile = 1;
-                numberOfOptions += 2;
-            }
+
         }
         //if the number of arguments are less than 9 + the options throw error
         if (args.length < 10 + numberOfOptions) {
@@ -116,83 +123,88 @@ public class Project4 {
             System.exit(1);
         }
 
-
-        File exists = new File(fileName);
-        //if file exists, parse file contents
-        if (optionTextFile == 1  && exists.isFile()) {
-            departDate = flightCommandArgs.get(3) + " " + flightCommandArgs.get(4) + " " + flightCommandArgs.get(5);
-            arrivalDate = flightCommandArgs.get(7) + " " + flightCommandArgs.get(8) + " " + flightCommandArgs.get(9);
-            TextParser parseText = new TextParser(fileName);
-            Airline airline = (Airline) parseText.parse();
-            // initialize flight values
-            checkIfEqual(flightCommandArgs.get(0), airline.getName());
-            Flight flight = new Flight(Integer.parseInt(flightCommandArgs.get(1)),
-                    flightCommandArgs.get(2), departDate, flightCommandArgs.get(6), arrivalDate);
-            airline.addFlight(flight);
-
-            if (optionPrettyPrint == 1) {
-                PrettyPrinter prt = new PrettyPrinter(prettyFile);
-                prt.dump(airline);
-            }
-
-            File xmlExists = new File(xmlFile);
-            if (optionXmlFile == 1 && xmlExists.isFile()) {
-                try {
-                    XmlParser xmlParser = new XmlParser(xmlFile);
-                    airline = (Airline) xmlParser.parse();
-                    airline.addFlight(flight);
-                    XmlDumper xmlDumper = new XmlDumper(xmlFile);
-                    xmlDumper.dump(airline);
-                } catch (ParserException | IOException e) {
-                    if (e.getMessage().equals("XML File is created successfully")) {
-                        airline = new Airline(airline);
-                        airline.addFlight(flight);
-                        XmlDumper xmlDumper = new XmlDumper(xmlFile);
-                        xmlDumper.dump(airline);
-                    } else {
-                        System.err.println(e.getMessage());
-                        System.exit(1);
-                    }
-                }
-            }
-            // dump updated contents into file
-            TextDumper dumpToFile = new TextDumper(fileName);
-            dumpToFile.dump(airline);
-            System.exit(1);
-
-
-        }
-
-        ArrayList<AbstractFlight> flightArray = new ArrayList<AbstractFlight>();
-        Airline airline = new Airline(flightCommandArgs.get(0), flightArray);
         departDate = flightCommandArgs.get(3) + " " + flightCommandArgs.get(4) + " " + flightCommandArgs.get(5);
         arrivalDate = flightCommandArgs.get(7) + " " + flightCommandArgs.get(8) + " " + flightCommandArgs.get(9);
         Flight flight = new Flight(Integer.parseInt(flightCommandArgs.get(1)),
                 flightCommandArgs.get(2), departDate, flightCommandArgs.get(6), arrivalDate);
 
+        if(optionTextFile == 1){
+            fileName = textFileName;
+        }
+        if(optionXmlFile == 1){
+            fileName = xmlFile;
+        }
+
+        if (optionTextFile == 1 || optionXmlFile == 1) {
+            File exists = new File(fileName);
+            //text file exists
+            if (optionTextFile == 1 && exists.isFile()) {
+                TextParser toParse = new TextParser(fileName);
+                Airline airline = (Airline) toParse.parse();
+                checkIfEqual(flightCommandArgs.get(0), airline.getName());
+                airline.addFlight(flight);
+
+                if (optionPrint == 1) {
+                    System.out.println("\nAirline: " + airline.getName());
+                    System.out.println(flight.toString());
+                }
+                // if prettyFlag is on (file)
+                if (optionPrettyPrint == 1) {
+                    PrettyPrinter toPretty = new PrettyPrinter(prettyFile);
+                    toPretty.dump(airline);
+                }
+
+                // dump updated contents into file
+                TextDumper toDump = new TextDumper(fileName);
+                toDump.dump(airline);
+                System.exit(1);
+            }
+            if (optionXmlFile == 1 && exists.isFile()) {
+                XmlParser toParse = new XmlParser(fileName);
+                Airline airline = (Airline) toParse.parse();
+                checkIfEqual(flightCommandArgs.get(0), airline.getName());
+                airline.addFlight(flight);
+
+                // if printFlag is on, print new flight description
+                if (optionPrint == 1) {
+                    System.out.println("\nAirline: " + airline.getName());
+                    System.out.println(flight.toString());
+                }
+                // if prettyFlag is on (file)
+                if (optionPrettyPrint == 1) {
+                    PrettyPrinter toPretty = new PrettyPrinter(prettyFile);
+                    toPretty.dump(airline);
+                }
+                // dump updated contents into file
+                XmlDumper toDump = new XmlDumper(fileName);
+                toDump.dump(airline);
+                System.exit(1);
+            }
+        }
+
+
+        // initialize flight values
+        ArrayList<Flight> flightArrayList = new ArrayList<Flight>();
+        Airline airline = new Airline(flightCommandArgs.get(0), flightArrayList);
         airline.addFlight(flight);
+        // if textFileFlag is on, dump this new airline and flight
+        if (optionTextFile == 1) {
+            TextDumper toDump = new TextDumper(textFileName);
+            toDump.dump(airline);
+        }
+        if (optionXmlFile == 1) {
+            XmlDumper toDump = new XmlDumper(xmlFile);
+            toDump.dump(airline);
+        }
+        if (optionPrettyPrint == 1) {
+            PrettyPrinter toPretty = new PrettyPrinter(prettyFile);
+            toPretty.dump(airline);
+        }
         // if printFlag is on, print new flight description
         if (optionPrint == 1) {
-            System.out.println("Airline " + airline.getName());
+            System.out.println("\nAirline: " + airline.getName());
             System.out.println(flight.toString());
         }
-        // if textFileFlag is on, dump this new airline and flight into a newly created file
-        if (optionTextFile == 1) {
-            TextDumper dumpToFile = new TextDumper(fileName);
-            dumpToFile.dump(airline);
-        }
-
-        if (optionPrettyPrint == 1) {
-
-            PrettyPrinter prt = new PrettyPrinter(prettyFile);
-            prt.dump(airline);
-        }
-
-        if(optionXmlFile == 1){
-            XmlDumper  dumpToXml = new XmlDumper(xmlFile);
-            dumpToXml.dump(airline);
-        }
-
         System.exit(1);
     }
 
@@ -234,4 +246,5 @@ public class Project4 {
             System.exit(1);
         }
     }
+
 }

@@ -1,1 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><Airline Name="CS410J"><Flight Number="42"><SRC>PDX</SRC><Departure>12/12/20 10:00 AM</Departure><DEST>PDX</DEST><Arrival>12/12/20 11:22 AM</Arrival></Flight><Flight Number="41"><SRC>LAX</SRC><Departure>10/10/20 10:00 PM</Departure><DEST>LAX</DEST><Arrival>10/10/20 11:11 PM</Arrival></Flight></Airline>

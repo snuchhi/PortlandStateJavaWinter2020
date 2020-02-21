@@ -7,6 +7,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ConverterTest {
+
+    private Airline createAirline(String airlineName, ArrayList<Flight> flightArray){
+        Airline airline = new Airline(airlineName, flightArray); // new Airline object
+        return airline;
+    }
+
+    private Flight createFlight(String flightNumber, String src, String depart, String dest, String arrive){
+        Flight flight = new Flight(Integer.parseInt(flightNumber), src, depart, dest, arrive);
+        return flight;
+    }
     private XmlDumper createXmlDumper(String content) {
         return new XmlDumper(content);
     }
@@ -20,38 +30,31 @@ public class ConverterTest {
         return new TextParser(content);
     }
 
-    private Airline createAirline(String airlineName, ArrayList<Flight> flightArray){
-        Airline airline = new Airline(airlineName, flightArray); // new Airline object
-        return airline;
-    }
 
-    private Flight createFlight(String flightNumber, String src, String depart, String dest, String arrive){
-        Flight flight = new Flight(Integer.parseInt(flightNumber), src, depart, dest, arrive);
-        return flight;
-    }
 
     @Test
     public void  createFileAndAirlineWithOneFlight() throws IOException, ParserException {
-        XmlDumper exampleDump = createXmlDumper("Test.txt");
+        TextDumper Dump = createTextDumper("TestConvert.txt");
         ArrayList<Flight> flightArray = new ArrayList<Flight>();
-        Airline exampleAirline = createAirline("CS410J", flightArray);
-        exampleAirline.addFlight(createFlight("01", "PDX", "12/12/2020 10:00 PM", "LAX", "12/12/2020 11:00 PM"));
-        exampleDump.dump(exampleAirline);
+        Airline exampleAirlineD = createAirline("CS410J", flightArray);
+        exampleAirlineD.addFlight(createFlight("41", "PDX", "10/10/2020 10:10 PM", "LAX", "10/10/2020 11:11 PM"));
+        Dump.dump(exampleAirlineD);
 
-        Converter toConvert = new Converter("Test.txt", "Test.xml");
+        Converter toConvert = new Converter("TestConvert.txt", "TestConvert.xml");
         toConvert.convert();
     }
 
     @Test
     public void  createFileAndAirlineWithTwoFlights() throws IOException, ParserException {
-        XmlDumper exampleXml = createXmlDumper("Test1.txt");
+        TextDumper exampleDump = createTextDumper("TestConvert2.txt");
         ArrayList<Flight> flightArray = new ArrayList<Flight>();
-        Airline exampleAirline = createAirline("CS410J", flightArray);
-        exampleAirline.addFlight(createFlight("42", "PDX", "12/12/2020 10:00 AM", "PDX", "12/12/2020 11:22 AM"));
-        exampleAirline.addFlight(createFlight("41", "LAX", "10/10/2020 10:00 PM", "LAX", "10/10/2020 11:11 PM"));
-        exampleXml.dump(exampleAirline);
+        Airline exampleAirlineD = createAirline("CS410J", flightArray);
+        exampleAirlineD.addFlight(createFlight("41", "PDX", "10/10/2020 10:10 PM", "LAX", "10/10/2020 11:11 PM"));
+        exampleAirlineD.addFlight(createFlight("42", "LAX", "10/10/2020 11:11 AM", "PDX", "10/10/2020 12:12 PM"));
+        exampleDump.dump(exampleAirlineD);
 
-        Converter toConvert = new Converter("Test1.txt", "Test1.xml");
+        Converter toConvert = new Converter("TestConvert2.txt", "TestConvert2.xml");
         toConvert.convert();
+
     }
 }

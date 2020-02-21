@@ -39,8 +39,8 @@ public class TextParser implements AirlineParser {
             BufferedReader bfReader = new BufferedReader(fileReader);
             String firstLine = bfReader.readLine();
             String airlineName = firstLine;
-            ArrayList<AbstractFlight> flightArrayList = new ArrayList<AbstractFlight>();
-            Airline airline = new Airline<>(firstLine,flightArrayList);
+            ArrayList<Flight> flightArrayList = new ArrayList<>();
+            Airline airline = new Airline(firstLine,flightArrayList);
             firstLine = bfReader.readLine();
 
             while (firstLine!=null) {

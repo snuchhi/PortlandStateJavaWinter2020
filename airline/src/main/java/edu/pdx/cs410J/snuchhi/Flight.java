@@ -21,10 +21,10 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
   private  int flightNum ;
   private  String src;
   private  Date depart;
-  private DateFormat departDate;
+  private DateFormat departFormat;
   private  String dest;
   private  Date arrive;
-  private DateFormat arriveDate ;
+  private DateFormat arriveFormat ;
   private  String errorMsg = "";
 
   /**
@@ -51,8 +51,9 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
         throw new IllegalArgumentException("The date format is wrong");
       }
       DateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
-      this.depart = format.parse(depart);
-      this.departDate = format;
+      Date date = format.parse(depart);
+      this.depart = date;
+      this.departFormat = format; // initialize
 
     } catch (IllegalArgumentException | ParseException e) {
       System.err.println("The departure date and time is invalid . " + errorMsg);
@@ -75,7 +76,7 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
         throw new IllegalArgumentException();
       }
       this.arrive = arriveDate;
-      this.arriveDate = format; // initialize
+      this.arriveFormat = format; // initialize
     } catch (IllegalArgumentException | ParseException e) {
       System.err.println("The arrival date is invalid." + errorMsg);
       throw new IllegalArgumentException();
@@ -151,6 +152,14 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
    *
    * @return
    */
+  public String getLongDeparture() {
+    return departFormat.format(this.depart);
+  }
+
+  /**
+   *
+   * @return
+   */
   @Override
   public String getDestination() {
 
@@ -167,6 +176,14 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
     DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);
     return df.format(this.arrive);
     //return this.arrive.toString();
+  }
+
+  /**
+   *
+   * @return
+   */
+  public String getLongArrival() {
+    return arriveFormat.format(this.arrive);
   }
 
   /**

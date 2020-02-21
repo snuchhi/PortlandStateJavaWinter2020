@@ -3,50 +3,36 @@ package edu.pdx.cs410J.snuchhi;
 import edu.pdx.cs410J.AbstractAirline;
 import edu.pdx.cs410J.AirlineParser;
 import edu.pdx.cs410J.ParserException;
-import edu.pdx.cs410J.ProjectXmlHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class XmlParser extends ProjectXmlHelper implements AirlineParser {
+public class XmlParser implements AirlineParser {
     private final String fileName;
 
-    /** The System ID for the Family Tree DTD */
-    protected static final String SYSTEM_ID =
-            "http://www.cs.pdx.edu/~whitlock/dtds/airline.dtd";
-
-    /** The Public ID for the Family Tree DTD */
-    protected static final String PUBLIC_ID =
-            "-//Portland State University//DTD CS410J Airline//EN";
-
-    /**
-     * Constructor
-     * @param fileName
-     */
     public XmlParser(String fileName) {
-        super(PUBLIC_ID, SYSTEM_ID, "airline.dtd");
         this.fileName = fileName;
     }
 
-
-
     @Override
     public AbstractAirline parse() throws ParserException {
+        String[] newCommandArgs = new String[13];
         String airlineName = null;
-        ArrayList<Flight> flightArrayList = new ArrayList<Flight>();
+        String departureDateTime = null;
+        String arrivalDateTime = null;
+        ArrayList<Flight> flightArray = new ArrayList<Flight>();
+
+
         try{
             File file = new File(this.fileName);
             DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
@@ -55,28 +41,67 @@ public class XmlParser extends ProjectXmlHelper implements AirlineParser {
 
             document.getDocumentElement().normalize();
 
-            airlineName = document.getDocumentElement().getAttribute("Name");
+            airlineName = document.getElementsByTagName("name").item(0).getTextContent();
 
-            NodeList flightNodes = document.getElementsByTagName("flight");
-            for(int i=0; i< flightNodes.getLength(); i++) {
-                Node flightNode = flightNodes.item(i);
+            NodeList fList = document.getElementsByTagName("flight");
+            for (int i = 0; i < fList.getLength(); i++){
+                Node fNode = fList.item(i);
+                if (fNode.getNodeType() == Node.ELEMENT_NODE){
+                    Element eElement = (Element) fNode;
+                    newCommandArgs[0] = eElement.getElementsByTagName("number").item(0).getTextContent();
+                    newCommandArgs[1] = eElement.getElementsByTagName("src").item(0).getTextContent();
 
-                if (flightNode.getNodeType() == Node.ELEMENT_NODE) {
-                    Element flightElement = (Element) flightNode;
-                    String number = flightElement.getElementsByTagName("number").item(0).getTextContent();
-                    String src = flightElement.getElementsByTagName("src").item(0).getTextContent();
-                    String depart = flightElement.getElementsByTagName("depart").item(0).getTextContent();
-                    String dest = flightElement.getElementsByTagName("dest").item(0).getTextContent();
-                    String arrive = flightElement.getElementsByTagName("arrive").item(0).getTextContent();
+                    NodeList dList = document.getElementsByTagName("depart");
+                    departureDateTime = getDate(newCommandArgs, departureDateTime, dList);
 
-                    Flight flight = new Flight(Integer.parseInt(number), src, depart, dest, arrive);
-                    flightArrayList.add(flight);
+                    newCommandArgs[7] = eElement.getElementsByTagName("dest").item(0).getTextContent();
+
+                    NodeList aList = document.getElementsByTagName("arrive");
+                    arrivalDateTime = getDate(newCommandArgs, arrivalDateTime, aList);
                 }
+                Flight flight = new Flight(Integer.parseInt(newCommandArgs[0]), newCommandArgs[1], departureDateTime, newCommandArgs[7], arrivalDateTime);
+                flightArray.add(flight);
             }
-
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            throw new ParserException("The XML is malformed");
+        } catch (Exception e) {
+            throw new IllegalArgumentException();
         }
-        return new Airline(airlineName, flightArrayList);
+        return new Airline(airlineName, flightArray);
     }
+
+    private String convertDate(String departureDate) {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        DateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
+        Date date = null;
+        String output = null;
+        try{
+            date = df.parse(departureDate);
+            output = outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return output;
+    }
+
+    private String getDate(String[] newCommandArgs, String dateTime, NodeList list) {
+        for (int j = 0; j < list.getLength(); j++) {
+            Element dElement = (Element) list.item(j);
+
+            Element dDate = (Element) dElement.getElementsByTagName("date").item(0);
+            newCommandArgs[2] = dDate.getAttribute("day");
+            newCommandArgs[3] = dDate.getAttribute("month");
+            newCommandArgs[4] = dDate.getAttribute("year");
+
+            Element dTime = (Element) dElement.getElementsByTagName("time").item(0);
+            newCommandArgs[5] = dTime.getAttribute("hour");
+            newCommandArgs[6] = dTime.getAttribute("minute");
+
+            dateTime = newCommandArgs[2] + "/" + newCommandArgs[3] + "/" + newCommandArgs[4] +
+                    " " + newCommandArgs[5] + ":" + newCommandArgs[6];
+            dateTime = convertDate(dateTime);
+        }
+        return dateTime;
+    }
+
+
+    
 }

@@ -1,100 +1,153 @@
 package edu.pdx.cs410J.snuchhi;
 
 import edu.pdx.cs410J.AbstractAirline;
-import edu.pdx.cs410J.AbstractFlight;
-import edu.pdx.cs410J.AirlineDumper;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Date;
+import edu.pdx.cs410J.AirlineDumper;
+import org.w3c.dom.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.io.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
 
 public class XmlDumper implements AirlineDumper {
 
-    public String fileName;
+    public final String fileName;
 
-    /**
-     * constructor
-     *
-     * @param fileName - name of the file
-     */
     public XmlDumper(String fileName) {
-
-        //  if(!fileName.matches("([a-z]|[A-Z]|[0-9]|[.])*")){
-        //    throw new IllegalArgumentException("File name is invalid, cannot dump");
-        //  }
         this.fileName = fileName;
     }
 
+    /**
+     *
+     * @param airline
+     * @throws IOException
+     */
     @Override
-    public void dump(AbstractAirline abstractAirline) throws IOException {
-
-        ArrayList<Flight> flightArray = (ArrayList<Flight>) abstractAirline.getFlights();
-
+    public void dump(AbstractAirline airline) throws IOException {
+        Document document = null;
+        ArrayList<Flight> flightArray = (ArrayList<Flight>) airline.getFlights();
         try {
-            DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
-            Document document = documentBuilder.newDocument();
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setValidating(true);
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            DOMImplementation dom = builder.getDOMImplementation();
+            DocumentType docType = dom.createDocumentType("airline", AirlineXmlHelper.PUBLIC_ID, AirlineXmlHelper.SYSTEM_ID);
+            document = dom.createDocument(null, "airline", docType);
+        } catch (ParserConfigurationException e) {
+            System.out.println(e);
+        }
 
             //Airline
-            Element airlineRoot = document.createElement("Airline");
-            document.appendChild(airlineRoot);
+            Element airlineRoot = document.getDocumentElement();
+            //Airline
+            //Element airlineRoot = doc.createElement("airline");
+            //doc.appendChild(airlineRoot);
             //AirlineName
-            Attr airlineName = document.createAttribute("Name");
-            airlineName.setValue(abstractAirline.getName());
-            airlineRoot.setAttributeNode(airlineName);
+            Element airlineName = document.createElement("name");
+            airlineName.appendChild(document.createTextNode(airline.getName()));
+            airlineRoot.appendChild(airlineName);
 
-            //Insert the details of flight
-            for(Flight f : flightArray) {
-                String departureDate = f.getDepartureString().replace(",", "");
-                String arrivalDate = f.getArrivalString().replace(",", "");
+            //Flight
+            for (Flight f : flightArray) {
+                String departureDate = f.getLongDeparture().replace(",", "");
+                departureDate = convertDate(departureDate);
+
+                String arrivalDate = f.getLongArrival().replace(",", "");
+                arrivalDate = convertDate(arrivalDate);
+
                 String num = String.valueOf(f.getNumber());
 
                 //Flight
-                Element flightRoot = document.createElement("Flight");
+                Element flightRoot = document.createElement("flight");
                 airlineRoot.appendChild(flightRoot);
+
                 //FlightNumber
-                Attr flightNumber = document.createAttribute("Number");
-                flightNumber.setValue(num);
-                flightRoot.setAttributeNode(flightNumber);
-                //Source
-                Element flightSrc = document.createElement("SRC");
+                Element flightNumber = document.createElement("number");
+                flightNumber.appendChild(document.createTextNode(num));
+                flightRoot.appendChild(flightNumber);
+
+                //FlightSrc
+                Element flightSrc = document.createElement("src");
                 flightSrc.appendChild(document.createTextNode(f.getSource()));
                 flightRoot.appendChild(flightSrc);
-                //Departure
-                Element flightDepart = document.createElement("Departure");
-                flightDepart.appendChild(document.createTextNode(departureDate));
-                flightRoot.appendChild(flightDepart);
-                //Destination
-                Element flightDest = document.createElement("DEST");
+
+                //FlightDepart
+                Element departRoot = document.createElement("depart");
+                addDate(document, departureDate, flightRoot, departRoot);
+
+                //FlightDest
+                Element flightDest = document.createElement("dest");
                 flightDest.appendChild(document.createTextNode(f.getDestination()));
                 flightRoot.appendChild(flightDest);
-                //Arrival
-                Element flightArrival = document.createElement("Arrival");
-                flightArrival.appendChild(document.createTextNode(arrivalDate));
-                flightRoot.appendChild(flightArrival);
+
+                //FlightArrival
+                Element arriveRoot = document.createElement("arrive");
+                addDate(document, arrivalDate, flightRoot, arriveRoot);
             }
-            //create XML and transform DOM to XML
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource domSource = new DOMSource(document);
+
+        try {
+            Source src = new DOMSource(document);
+            TransformerFactory xFactory = TransformerFactory.newInstance();
+            Transformer xForm = xFactory.newTransformer();
+            xForm.setOutputProperty(OutputKeys.INDENT, "yes");
+            xForm.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, AirlineXmlHelper.SYSTEM_ID);
             StreamResult streamResult = new StreamResult(new File(this.fileName));
-
-            transformer.transform(domSource, streamResult);
-
-        } catch (ParserConfigurationException | TransformerException e) {
-            System.out.println(e);
+            xForm.transform(src, streamResult);
+        } catch (TransformerException ex) {
+            System.err.println("xml dumper error");
         }
+
     }
+
+    private String convertDate(String departureDate) {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
+        DateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        Date date = null;
+        String output = null;
+        try{
+            date = df.parse(departureDate);
+            output = outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return output;
+    }
+
+    private void addDate(Document doc, String dateString, Element flightRoot, Element dateRoot) {
+        flightRoot.appendChild(dateRoot);
+
+        Element departarriveDate = doc.createElement("date");
+        dateRoot.appendChild(departarriveDate);
+
+        Attr departarriveDay = doc.createAttribute("day");
+        departarriveDay.setValue(dateString.substring(0,2));
+        departarriveDate.setAttributeNode(departarriveDay);
+        Attr departarriveMonth = doc.createAttribute("month");
+        departarriveMonth.setValue(dateString.substring(3,5));
+        departarriveDate.setAttributeNode(departarriveMonth);
+        Attr departarriveYear = doc.createAttribute("year");
+        departarriveYear.setValue(dateString.substring(6,10));
+        departarriveDate.setAttributeNode(departarriveYear);
+
+        Element departarriveTime = doc.createElement("time");
+        dateRoot.appendChild(departarriveTime);
+
+        Attr departarriveHour = doc.createAttribute("hour");
+        departarriveHour.setValue(dateString.substring(11,13));
+        departarriveTime.setAttributeNode(departarriveHour);
+        Attr departMinute = doc.createAttribute("minute");
+        departMinute.setValue(dateString.substring(14,16));
+        departarriveTime.setAttributeNode(departMinute);
+    }
+
+
 }

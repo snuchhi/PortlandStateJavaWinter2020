@@ -34,7 +34,7 @@ public class TextDumper implements AirlineDumper {
     public void dump(AbstractAirline abstractAirline) throws IOException {
         //get the name of the airline to put to dump into the file
         String airlineName = abstractAirline.getName();
-        ArrayList<AbstractFlight> flightArrayList = (ArrayList<AbstractFlight>) abstractAirline.getFlights();
+        ArrayList<Flight> flightArrayList = (ArrayList<Flight>) abstractAirline.getFlights();
         try{
 
             File file = new File(this.fileName);
@@ -70,7 +70,7 @@ public class TextDumper implements AirlineDumper {
      * @param bfWriter - buffer writer to the text file
      * @throws IOException
      */
-    private void bufferWriter(String airlineName, ArrayList<AbstractFlight> flightArrayList, FileWriter writer, BufferedWriter bfWriter) throws IOException {
+    private void bufferWriter(String airlineName, ArrayList<Flight> flightArrayList, FileWriter writer, BufferedWriter bfWriter) throws IOException {
         bfWriter.write(airlineName);
         bfWriter.newLine();
         for (AbstractFlight abstractFlight : flightArrayList) {
