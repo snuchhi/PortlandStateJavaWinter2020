@@ -48,10 +48,6 @@ public class XmlDumper implements AirlineDumper {
 
             //Airline
             Element airlineRoot = document.getDocumentElement();
-            //Airline
-            //Element airlineRoot = doc.createElement("airline");
-            //doc.appendChild(airlineRoot);
-            //AirlineName
             Element airlineName = document.createElement("name");
             airlineName.appendChild(document.createTextNode(airline.getName()));
             airlineRoot.appendChild(airlineName);

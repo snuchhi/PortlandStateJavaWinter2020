@@ -26,7 +26,7 @@ public class XmlParser implements AirlineParser {
 
     @Override
     public AbstractAirline parse() throws ParserException {
-        String[] newCommandArgs = new String[13];
+        String[] argForXml = new String[13];
         String airlineName = null;
         String departureDateTime = null;
         String arrivalDateTime = null;
@@ -48,18 +48,18 @@ public class XmlParser implements AirlineParser {
                 Node fNode = fList.item(i);
                 if (fNode.getNodeType() == Node.ELEMENT_NODE){
                     Element eElement = (Element) fNode;
-                    newCommandArgs[0] = eElement.getElementsByTagName("number").item(0).getTextContent();
-                    newCommandArgs[1] = eElement.getElementsByTagName("src").item(0).getTextContent();
+                    argForXml[0] = eElement.getElementsByTagName("number").item(0).getTextContent();
+                    argForXml[1] = eElement.getElementsByTagName("src").item(0).getTextContent();
 
                     NodeList dList = document.getElementsByTagName("depart");
-                    departureDateTime = getDate(newCommandArgs, departureDateTime, dList);
+                    departureDateTime = getDate(argForXml, departureDateTime, dList);
 
-                    newCommandArgs[7] = eElement.getElementsByTagName("dest").item(0).getTextContent();
+                    argForXml[7] = eElement.getElementsByTagName("dest").item(0).getTextContent();
 
                     NodeList aList = document.getElementsByTagName("arrive");
-                    arrivalDateTime = getDate(newCommandArgs, arrivalDateTime, aList);
+                    arrivalDateTime = getDate(argForXml, arrivalDateTime, aList);
                 }
-                Flight flight = new Flight(Integer.parseInt(newCommandArgs[0]), newCommandArgs[1], departureDateTime, newCommandArgs[7], arrivalDateTime);
+                Flight flight = new Flight(Integer.parseInt(argForXml[0]), argForXml[1], departureDateTime, argForXml[7], arrivalDateTime);
                 flightArray.add(flight);
             }
         } catch (Exception e) {
@@ -82,21 +82,21 @@ public class XmlParser implements AirlineParser {
         return output;
     }
 
-    private String getDate(String[] newCommandArgs, String dateTime, NodeList list) {
+    private String getDate(String[] argForXml, String dateTime, NodeList list) {
         for (int j = 0; j < list.getLength(); j++) {
             Element dElement = (Element) list.item(j);
 
             Element dDate = (Element) dElement.getElementsByTagName("date").item(0);
-            newCommandArgs[2] = dDate.getAttribute("day");
-            newCommandArgs[3] = dDate.getAttribute("month");
-            newCommandArgs[4] = dDate.getAttribute("year");
+            argForXml[2] = dDate.getAttribute("day");
+            argForXml[3] = dDate.getAttribute("month");
+            argForXml[4] = dDate.getAttribute("year");
 
             Element dTime = (Element) dElement.getElementsByTagName("time").item(0);
-            newCommandArgs[5] = dTime.getAttribute("hour");
-            newCommandArgs[6] = dTime.getAttribute("minute");
+            argForXml[5] = dTime.getAttribute("hour");
+            argForXml[6] = dTime.getAttribute("minute");
 
-            dateTime = newCommandArgs[2] + "/" + newCommandArgs[3] + "/" + newCommandArgs[4] +
-                    " " + newCommandArgs[5] + ":" + newCommandArgs[6];
+            dateTime = argForXml[2] + "/" + argForXml[3] + "/" + argForXml[4] +
+                    " " + argForXml[5] + ":" + argForXml[6];
             dateTime = convertDate(dateTime);
         }
         return dateTime;
