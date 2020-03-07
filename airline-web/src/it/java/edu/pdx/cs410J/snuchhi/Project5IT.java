@@ -32,7 +32,7 @@ public class Project5IT extends InvokeMainTestCase {
     public void test1NoCommandLineArguments() {
         MainMethodResult result = invokeMain(Project5.class);
         assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardError(), containsString(Project5.MISSING_ARGS));
+        assertThat(result.getTextWrittenToStandardError(), containsString(Project5.MISSING_ARG));
     }
 
     @Test

@@ -13,8 +13,8 @@ import java.util.Map;
  * Airline server using REST.
  */
 public class Project5 {
-   // when there are missing arguments
-   public static final String MISSING_ARGS = "Missing command line arguments";
+
+   public static final String MISSING_ARG = "Missing command line arguments";
 
    static final String USAGE_MESSAGE = "args are (in this order):\n" +
            "\tAirline - name of airline\n" +
@@ -30,15 +30,19 @@ public class Project5 {
            "\t-print\n" +
            "\t-README\n";
 
+   /**
+    *
+    * @param args -command line arguments
+    */
    public static void main(String... args) {
-      String hostName = null;         // host name
-      String portString = null;       // port name
-      String airlineName = null;      // airline name
-      String flightNumber = null;     // flight number
-      String src = null;              // source code
-      String depart = null;           // depart date and time
-      String dest = null;             // destination code
-      String arrive = null;           // arrive date and time
+      String hostName = null;
+      String portString = null;
+      String airlineName = null;
+      String flightNumber = null;
+      String src = null;
+      String depart = null;
+      String dest = null;
+      String arrive = null;
 
       int printFlag = 0;              // if -print, turn flag on
       int searchFlag = 0;             // if -search, turn flag on
@@ -47,9 +51,9 @@ public class Project5 {
 
       String [] options = {"-README", "-print", "-search", "-host", "-port"}; // list of options
 
-      // error if no args
+      // error if no arguments are present
       if (args.length <= 0) {
-         printErrorMessageAndExit( MISSING_ARGS);
+         printErrorMessageAndExit( MISSING_ARG);
       }
 
       // find options README, print, search
@@ -74,7 +78,7 @@ public class Project5 {
             portFlag = 1;
          }
 
-         // find option that is bad / doesn't exist
+
          if (arg.contains("-")){
             int invalidFlag = 1;
             for (String op : options){
@@ -89,7 +93,7 @@ public class Project5 {
          }
       }
 
-      // cannot have print and search
+      //print and search cant be specified together
       if (printFlag == 1 && searchFlag == 1) {
          printErrorMessageAndExit("-print and -search cannot be specified at same time");
       }
@@ -146,11 +150,11 @@ public class Project5 {
 
       if (hostFlag == 1 && portFlag == 1) {
 
-         int port = 0;       // port number as actual integer
+         int port = 0;
 
          // error if host name is null
          if (hostName == null) {
-            printErrorMessageAndExit(MISSING_ARGS);
+            printErrorMessageAndExit(MISSING_ARG);
 
             // error if port name is null
          } else if (portString == null) {
@@ -172,11 +176,11 @@ public class Project5 {
          AirlineRestClient client = new AirlineRestClient(hostName, port);
 
          try {
-            // if no airline name, automatic error
+
             if (airlineName == null) {
                printErrorMessageAndExit("Missing airline name");
 
-               // if just airline name, pretty print all flights of airline
+
             } else if (flightNumber == null && searchFlag == 0) {
 
                String xml = client.getAirlineAsXml(airlineName);
@@ -185,7 +189,7 @@ public class Project5 {
                PrettyPrinter toPretty = new PrettyPrinter();
                toPretty.dump(parsedAirline);
 
-               // if -search, print direct flights of airline: SRC -> DEST
+
             } else if (searchFlag == 1) {
                String xml = client.getAirlineAsXml(airlineName);
                XmlParser parser = new XmlParser(xml);
@@ -193,24 +197,24 @@ public class Project5 {
                PrettyPrinter toPretty = new PrettyPrinter();
                toPretty.dumpSearch(parsedAirline, src, dest);
 
-               // create a full airline and add it to airline REST client
+
             } else {
-               // Post the airlineName/flightNumber pair
+
                client.addFlight(airlineName, Integer.parseInt(flightNumber), src, depart, dest, arrive);
             }
 
-            // bad connection/error
+
          } catch (IOException ex) {
             printErrorMessageAndExit("Server error: " + ex);
             return;
 
-            // bad parse
+
          } catch (ParserException ex) {
             printErrorMessageAndExit("Parser error");
          }
       }
 
-      // if print option, print new flight
+      // if print option then print new flight
       if (printFlag == 1) {
          System.out.println("\nAirline: " + airlineName);
          System.out.println("Flight: " + Integer.parseInt(flightNumber) + " " + src + " " + depart + " " + dest + " " + arrive);
