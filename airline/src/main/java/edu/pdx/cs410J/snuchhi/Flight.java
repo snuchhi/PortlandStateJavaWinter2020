@@ -205,6 +205,9 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
     int i = this.src.compareToIgnoreCase(flight.src);
     if (i != 0) return i;
     return Long.compare(this.depart.getTime(), flight.depart.getTime());
+
   }
+
+  
 }
 

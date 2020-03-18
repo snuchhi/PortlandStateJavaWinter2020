@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Airline Application</string>
+    <string name="submit1">Add Flight</string>
+    <string name="help">HELP</string>
+    <string name="ReadMe">ReadMe</string>
+    <string name="readme">ReadMe</string>
+    <string name="readmedata">This is simple airline android application developed as a part of final project for Java Course at PSU.
+        This application allows you to add flights for an airline, search for flights and pretty print flights details of an airline.</string>
+    <string name="add_flights">Add Flight Details</string>
+    <string name="display_all_flight_details">Pretty Print Flight Details</string>
+    <string name="search_flights_for_an_airline">Search Flights for an Airline</string>
+    <string name="enter_airline_name">Enter airline name</string>
+    <string name="enter_flight_number">Enter Flight Number</string>
+    <string name="enter_source_code">Enter Source code</string>
+    <string name="pdx">PDX</string>
+    <string name="search">Search Flights</string>
+    <string name="airlinename">airline</string>
+    <string name="sourcename">source</string>
+    <string name="destname">destination</string>
+    <string name="SearchInfo">Search</string>
+    <string name="displaydetails">Displaying Flight Details</string>
+    <string name="textview">Pretty- Flight Details</string>
+</resources>

@@ -33,7 +33,7 @@ public class PrettyPrinter implements AirlineDumper {
         int num_flights = flights.size();
 
         if (fileName.equals("-")) {
-            System.out.println("The airline is : " + airlineName + " which has the following flights scheduled");
+                System.out.println("The airline is : " + airlineName + " which has the following flights scheduled");
             for (int i = 0; i < num_flights; i++) {
                 Flight flight = (Flight) flights.get(i);
                 System.out.println("The flight number " + flight.getNumber() + ":" +

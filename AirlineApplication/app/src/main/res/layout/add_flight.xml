@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".AddFlightDetails">
+
+    <EditText
+        android:id="@+id/airline_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:hint="@string/enter_airline_name"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/flight_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="Enter Flight Number"
+        android:inputType="number"
+        tools:ignore="TextFields" />
+
+    <EditText
+        android:id="@+id/source"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="Enter Source"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/depart_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Enter departure date(11/11/2020)"
+        android:inputType="date|text" />
+
+    <EditText
+        android:id="@+id/depart_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Enter departure time(09:00am)"
+        android:inputType="text|time" />
+
+    <EditText
+        android:id="@+id/destination"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="Enter Destination"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/arrival_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Enter arrival date(11/11/2020)"
+        android:importantForAutofill="no"
+        android:inputType="date|text"
+        tools:ignore="TextFields" />
+
+    <EditText
+        android:id="@+id/arrival_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Enter arrival time (10:00am)"
+        android:inputType="text|time" />
+
+    <Button
+        android:id="@+id/add_flight_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="cursive"
+        android:hint="Click to add"
+        android:includeFontPadding="true"
+        android:text="Add Flight"
+        android:textColor="#5003D8" />
+</LinearLayout>
