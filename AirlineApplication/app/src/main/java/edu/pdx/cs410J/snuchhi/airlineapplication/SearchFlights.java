@@ -70,7 +70,7 @@ public class SearchFlights extends AppCompatActivity {
             }
         });
 
-        Button prettyPrint =  (Button) findViewById(R.id.prettyprint);
+        Button prettyPrint =  (Button) findViewById(R.id.prettyprintresults);
         prettyPrint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

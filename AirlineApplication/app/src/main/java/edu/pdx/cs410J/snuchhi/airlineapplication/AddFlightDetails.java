@@ -31,7 +31,7 @@ public class AddFlightDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 EditText airlineName=(EditText)findViewById(R.id.airline_name);
-                String aname=airlineName.getText().toString();
+                String airline =airlineName.getText().toString();
                 EditText flightnum=(EditText)findViewById(R.id.flight_number);
                 String fnum=flightnum.getText().toString();
                 EditText source=(EditText)findViewById(R.id.source);
@@ -46,19 +46,17 @@ public class AddFlightDetails extends AppCompatActivity {
                 String adate=arrivaldate.getText().toString();
                 EditText arrivaltime=(EditText)findViewById(R.id.arrival_time);
                 String atime=arrivaltime.getText().toString();
-                String depart = ddate + " " + dtime;
-                String arrive = adate + " " + atime;
                 try {
-                    Airline a1 = new Airline(aname);
-                    Flight f1 = new Flight(fnum);
-                    f1.setSource(src);
-                    f1.setDepartDate(ddate, dtime);
-                    f1.setDestination(dest);
-                    f1.setArrivalDate(adate, atime);
-                    if(!Flight.checkarrivalanddepartdate(f1.getDepartureString(),f1.getArrivalString())){
+                    Airline a1 = new Airline(airline);
+                    Flight flight = new Flight(fnum);
+                    flight.setSource(src);
+                    flight.setDepartDate(ddate, dtime);
+                    flight.setDestination(dest);
+                    flight.setArrivalDate(adate, atime);
+                    if(!Flight.checkarrivalanddepartdate(flight.getDepartureString(),flight.getArrivalString())){
                         throw new Exception("Arrival date or time must be before departure date or time");
                     }
-                    writeFile(aname,f1);
+                    writeFile(airline,flight);
 
                 }catch (Exception e){
                     System.out.println(e.getMessage());
@@ -70,19 +68,27 @@ public class AddFlightDetails extends AppCompatActivity {
                 }
             }
         });
+
+        Button search=(Button)findViewById(R.id.HomePage);
+        search.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                Intent homePage=new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(homePage);
+            }
+
+        });
     }
-    public void writeFile(String aname,Flight f1) throws IOException {
-        File file = new File(context.getFilesDir(), aname+".txt");
+    public void writeFile(String airlinename,Flight f1) throws IOException {
+        File file = new File(context.getFilesDir(), airlinename+".txt");
         if(file.exists()){
-            System.out.println("File exists "+context.getFilesDir());
             FileWriter writer = new FileWriter(file,true);
-            writer.write(aname+";"+f1.getNumber()+";"+f1.getSource()+";"+f1.getDepartureString()+";"+f1.getDestination()+";"+f1.getArrivalString()+System.getProperty("line.separator"));
+            writer.write(airlinename+";"+f1.getNumber()+";"+f1.getSource()+";"+f1.getDepartureString()+";"+f1.getDestination()+";"+f1.getArrivalString()+System.getProperty("line.separator"));
             writer.close();
             Toast.makeText(this,"Flight details added",Toast.LENGTH_LONG).show();
         }else{
             file.createNewFile();
             FileWriter writer = new FileWriter(file,true);
-            writer.write(aname+";"+f1.getNumber()+";"+f1.getSource()+";"+f1.getDepartureString()+";"+f1.getDestination()+";"+f1.getArrivalString()+System.getProperty("line.separator"));
+            writer.write(airlinename+";"+f1.getNumber()+";"+f1.getSource()+";"+f1.getDepartureString()+";"+f1.getDestination()+";"+f1.getArrivalString()+System.getProperty("line.separator"));
             writer.close();
             Toast.makeText(this,"Flight details added",Toast.LENGTH_LONG).show();
         }

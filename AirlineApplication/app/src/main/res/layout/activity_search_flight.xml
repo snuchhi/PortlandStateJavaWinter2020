@@ -83,7 +83,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/prettyprint"
+        android:id="@+id/prettyprintresults"
         android:layout_width="206dp"
         android:layout_height="57dp"
         android:layout_gravity="center"

@@ -80,9 +80,18 @@
         android:id="@+id/add_flight_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="cursive"
+        android:fontFamily="sans-serif"
         android:hint="Click to add"
         android:includeFontPadding="true"
         android:text="Add Flight"
-        android:textColor="#5003D8" />
+        android:textColor="#5003D8"
+        android:textStyle="bold|italic" />
+
+    <Button
+        android:id="@+id/HomePage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Home"
+        android:textColor="#673AB7"
+        android:textStyle="bold|italic" />
 </LinearLayout>
