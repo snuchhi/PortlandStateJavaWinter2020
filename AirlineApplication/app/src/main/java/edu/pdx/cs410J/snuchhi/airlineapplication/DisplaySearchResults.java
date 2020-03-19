@@ -53,7 +53,11 @@ public class DisplaySearchResults extends AppCompatActivity {
                     result2.add(f1);
                 }
             } catch (Exception e) {
-                createAlert(e.getMessage());
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+                builder1.setMessage(e.getMessage());
+                builder1.setCancelable(true);
+                AlertDialog alert1 = builder1.create();
+                alert1.show();
             }
         }
 
@@ -63,7 +67,11 @@ public class DisplaySearchResults extends AppCompatActivity {
                 finalresult.add(f.toString());
             }
         }catch (Exception e){
-            createAlert(e.getMessage());
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+            builder1.setMessage(e.getMessage());
+            builder1.setCancelable(true);
+            AlertDialog alert1 = builder1.create();
+            alert1.show();
         }
         if(finalresult.size()==0 && source==null && destination==null){
             assert a1 != null;
@@ -88,13 +96,7 @@ public class DisplaySearchResults extends AppCompatActivity {
 
     }
 
-    public void createAlert(String msg){
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
-        builder1.setMessage(msg);
-        builder1.setCancelable(true);
-        AlertDialog alert11 = builder1.create();
-        alert11.show();
-    }
+
 
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();

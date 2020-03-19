@@ -65,7 +65,12 @@ public class PrettyPrintSearchResults extends AppCompatActivity {
                     resultnew.add(f);
                 }
             } catch (Exception e) {
-                createAlert(e.getMessage());
+
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+                builder1.setMessage(e.getMessage());
+                builder1.setCancelable(true);
+                AlertDialog alert1 = builder1.create();
+                alert1.show();
             }
         }
 
@@ -78,7 +83,12 @@ public class PrettyPrintSearchResults extends AppCompatActivity {
                         f.getArrivalString()+" \n"+"Travel Time is "+f.timesDifferenceInMinutes(f.getDepartureString(),f.getArrivalString())+" minutes");
             }
         }catch (Exception e){
-            createAlert(e.getMessage());
+
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+            builder1.setMessage(e.getMessage());
+            builder1.setCancelable(true);
+            AlertDialog alert1 = builder1.create();
+            alert1.show();
         }
         if(finalOutput.size()==0 && source==null && destination==null){
             assert a1 != null;
@@ -107,13 +117,7 @@ public class PrettyPrintSearchResults extends AppCompatActivity {
         listView.setAdapter(arrayAdapter);
 
     }
-    public void createAlert(String msg){
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
-        builder1.setMessage(msg);
-        builder1.setCancelable(true);
-        AlertDialog alert11 = builder1.create();
-        alert11.show();
-    }
+
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.help_menu,menu);

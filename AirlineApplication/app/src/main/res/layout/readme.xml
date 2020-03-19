@@ -20,7 +20,7 @@
         android:id="@+id/readme_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#BBE0E4"
+        android:background="#A0E1D8"
         android:text="@string/readmedata"
         android:textSize="24sp"
         android:textStyle="italic" />

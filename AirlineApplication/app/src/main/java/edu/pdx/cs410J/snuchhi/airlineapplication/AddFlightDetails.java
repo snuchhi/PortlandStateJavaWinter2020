@@ -59,7 +59,6 @@ public class AddFlightDetails extends AppCompatActivity {
                     writeFile(airline,flight);
 
                 }catch (Exception e){
-                    System.out.println(e.getMessage());
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
                     builder1.setMessage(e.getMessage());
                     builder1.setCancelable(true);
